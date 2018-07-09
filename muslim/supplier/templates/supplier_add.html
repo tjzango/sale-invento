@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} Add Supplier{% endblock %}
+{% block content %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <!-- PROFILE HEADER -->
+                <form class="form-auth-small" method="post">
+                    {% csrf_token %}
+                    <div class="profile-detail">
+                        <div class="profile-info">
+                            <h4 class="heading">Supplier Information</h4>
+                            <ul class="list-unstyled list-justify">
+                                <li>
+                                    Name:
+                                    <span class="col-md-10">
+                                        {{ form.name }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Contact:
+                                    <span class="col-md-10">
+                                        {{ form.contact }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Address:
+                                    <span class="col-md-10">
+                                        {{ form.address }}
+                                    </span>
+                                </li>
+                                <br/>
+                            </ul>
+                            <div class="text-center">
+                                <button class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END PROFILE DETAIL -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

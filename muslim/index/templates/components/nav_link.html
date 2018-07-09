@@ -1,0 +1,10 @@
+{% load nav_modifiers %}
+<li>
+    {% if param == None %}
+        <a class="{% is_active request.path path %}" href="{% url path %}">
+    {% else %}
+        <a class="{% is_active request.path path param %}" href="{% url path param%}">
+    {% endif %}
+        <i class="{{ icon }} u-mr-xsmall active"></i>{{ title }}
+    </a>
+</li>

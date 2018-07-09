@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} Customer{% endblock %}
+{% block head_title %}Index{% endblock %}
+{% block content %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+
+                <!-- PROFILE HEADER -->
+                <form class="form-auth-small" method="post">
+                    {% csrf_token %}
+                    <div class="profile-detail">
+                        <div class="profile-info">
+                            <h4 class="heading">Basic Info</h4>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                        <i class="fa fa-times-circle"></i> {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <ul class="list-unstyled list-justify">
+                                <li>
+                                    First Name:
+                                    <span class="col-md-10">
+                                        {% render_field form.first_name class='form-control' value=user.user.first_name %}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Last Name:
+                                    <span class="col-md-10">
+                                        {% render_field form.last_name class='form-control' value=user.user.last_name %}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Contact:
+                                    <span class="col-md-10">
+                                        {% render_field form.contact class='form-control' value=user.contact %}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Email:
+                                    <span class="col-md-10">
+                                        <input type="email" value="{{ user.user.email }}" readonly class="form-control">
+                                    </span>
+                                </li>
+                                <br>
+                                <li>
+                                    Company:
+                                    <span class="col-md-10">
+                                        <input type="email" value="{{ user.company.name }}" readonly
+                                               class="form-control">
+                                    </span>
+                                </li>
+                                <br>
+                            </ul>
+                            <div class="text-center">
+                                <button class="btn btn-primary">Update Profile</button>
+                                <a href="{% url 'password_change' %}" class="btn btn-primary">Change Password</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END PROFILE DETAIL -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

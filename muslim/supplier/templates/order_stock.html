@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load widget_tweaks %}
+
+{% block title %} Stock Order{% endblock %}
+{% block content %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <form class="form-auth-small" method="post">
+                {% csrf_token %}
+                <div class="profile-detail">
+                    <div class="profile-info">
+                        <h4 class="heading">Stock Order</h4>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled list-justify">
+                                <li>
+                                    Item:
+                                    <span class="col-md-10">
+                                        <input type="email" value="{{ order.item }}" readonly
+                                               class="form-control input-lg">
+                                    </span>
+                                </li>
+                                <br/><br/>
+                                <li>
+                                    Supplier:
+                                    <span class="col-md-10">
+                                        <input type="email" value="{{ order.supplier }}" readonly
+                                               class="form-control input-lg">
+                                    </span>
+                                </li>
+                                <br/>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled list-justify">
+                                <li>
+                                    Bill No:
+                                    <span class="col-md-10">
+                                        <input type="email" value="{{ order.bill_no }}" readonly class="form-control">
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Quantity:
+                                    <span class="col-md-10">
+                                    {% render_field form.quantity value=order.quantity %}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    T Price:
+                                    <span class="col-md-10">
+                                        {% render_field form.price value=order.price %}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li><span class="col-md-10"></span></li>
+                                <br/>
+                            </ul>
+
+                        </div>
+                    </div>
+                    {% if not order.stocked %}
+                        <div class="text-center">
+                            <button class="btn btn-primary">Stock</button>
+                        </div>
+                    {% endif %}
+                    <!-- END PROFILE DETAIL -->
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
