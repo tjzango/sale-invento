@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load supplier_modifier %}
+{% load widget_tweaks %}
+
+{% block title %} Order{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/css/custome-style.css">
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state">
+                <h4 class="c-state__number">{{ goods.count }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Number Of Transactions</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-down"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--success">
+                <h4 class="c-state__number">{{ goods | sum_transcation_total | money_format}}</h4>
+                <p style="font-size: 20px" class="c-state__status">Amount</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-up"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--warning">
+                <h4 class="c-state__number">$80,890</h4>
+                <p style="font-size: 20px" class="c-state__status">Total Budget</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-down"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+
+    </div>
+
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <a href="{% url 'supplier:order_request' %}">
+                    <button class="btn btn-primary btn-lg">Request New Order</button>
+                </a>
+                <div class="table-responsive">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <i class="fa fa-times-circle"></i> {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Item</th>
+                            <th>Supplier</th>
+                            <th>Bill No</th>
+                            <th>Requested By</th>
+                            <th>Price</th>
+                            <th>Quantity Recieved</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for good in goods %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ good.item }}</td>
+                                <td>{{ good.supplier }}</td>
+                                <td>{{ good.bill_no }}</td>
+                                <td>{{ good.requested_by }}</td>
+                                <td>{{ good.received_price }}</td>
+                                <td>{{ good.received_quantity }}</td>
+                                <td>{{ good.action }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/datatables/jquery.dataTables.js"></script>
+    <script src="/static/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/static/scripts/sb-admin-datatables.min.js"></script>
+{% endblock %}
