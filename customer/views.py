@@ -29,3 +29,13 @@ def customer_add(request):
         'form': form,
     }
     return render(request, 'customer_add.html', context)
+
+
+"""
+def customer_detail(request, key):
+    goods = RequestOrder.objects.filter(supplier__id=key)
+    context = {
+        'goods': goods
+    }
+    return render(request, 'supplier_detail.html', context)
+"""
