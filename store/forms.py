@@ -5,13 +5,15 @@ from store.models import Item, RequestOrder
 
 class AddItemForm(forms.ModelForm):
     name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': 'Name', 'class': 'form-control'}))
+        attrs={'placeholder': 'Name'}))
     price = forms.IntegerField(required=True, widget=forms.NumberInput(
-        attrs={'placeholder': 'Price', 'class': 'form-control'}))
+        attrs={'placeholder': 'Price'}))
+    description = forms.CharField(required=True, widget=forms.Textarea(
+        attrs={'placeholder': 'e.g Flour', 'rows': '3'}))
 
     class Meta:
         model = Item
-        fields = ('name', 'price')
+        fields = ('name', 'price', 'description')
 
 
 class RequestOrderForm(forms.ModelForm):
