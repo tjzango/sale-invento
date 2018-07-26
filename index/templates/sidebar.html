@@ -2,6 +2,9 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
+                {% with path='store:index' title='Accounting' icon='fa fa-book' %}
+                    {% include 'components/nav_link.html' %}
+                {% endwith %}
                 {% with path='store:index' title='Store' icon='lnr lnr-cart' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
@@ -11,26 +14,31 @@
                 {% with path='sale:index' title='Sale' icon='lnr lnr-wheelchair' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
-                {% with path='profile' title='Profile' icon='lnr lnr-user' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
                 {% with path='supplier:index' title='Supplier' icon='fa fa-users' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
                 {% with path='supplier:order' title='Order' icon='fa fa-shopping-basket' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
+                {% with path='store:index' title='Manage User' icon='fa fa-user-circle-o' %}
+                    {% include 'components/nav_link.html' %}
+                {% endwith %}
+                {% with path='store:index' title='Manage Employees' icon='fa fa-user-md' %}
+                    {% include 'components/nav_link.html' %}
+                {% endwith %}
+                {% with path='profile' title='Profile' icon='lnr lnr-user' %}
+                    {% include 'components/nav_link.html' %}
+                {% endwith %}
+                {% comment %}
                 <li>
                     <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="fa fa-user-circle"></i>
                         <span>Administrator</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                     <div id="subPages" class="collapse ">
                         <ul class="nav">
-                            {% with path='store:index' title='Add User' %}
-                                {% include 'components/nav_child.html' %}
-                            {% endwith %}
                         </ul>
                     </div>
                 </li>
+                {% endcomment %}
             </ul>
         </nav>
     </div>
