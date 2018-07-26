@@ -7,37 +7,25 @@
         <div class="clearfix">
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
-                <!-- PROFILE HEADER -->
-                <form class="form-auth-small" method="post">{% csrf_token %}
-                    <div class="profile-detail">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Add New Item</h3>
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <div class="alert alert-success alert-dismissible" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                    aria-label="Close"><span
-                                                    aria-hidden="true">&times;</span></button>
-                                            <i class="fa fa-times-circle"></i> {{ message }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                            <div class="panel-body">
-                                {{ form.name }}
-                                <br>
-                                <span class="input-group-addon">₦</span>
-                                {{ form.price }}
-                                <br>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary">Add</button>
-                        </div>
-                    </div>
-                </form>
-                <!-- END PROFILE DETAIL -->
+                <div class="panel-heading">
+            <h3 align='center' class="panel-title">Add Item</h3>
+        </div>
+        <div class="panel-body">
+            <form method="post">{% csrf_token %}
+                {{ form.name | add_class:'form-control' }}
+                <br>
+                {{ form.description | add_class:'form-control' | append_attr:'rows=3' }}
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">₦</span>
+                    {{ form.price | add_class:'form-control' }}
+                </div>
+                <br>
+                <div class="text-center">
+                    <button class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
             </div>
         </div>
     </div>

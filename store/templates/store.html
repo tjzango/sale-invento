@@ -23,6 +23,7 @@
                                 <th>Name</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Description</th>
                                 <th>Check</th>
                             </tr>
                             </thead>
@@ -32,6 +33,7 @@
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.price }}</td>
                                     <td>{{ item.get_remaining_quantity }}</td>
+                                    <td>{{ item.description }}</td>
                                     <td><a href="{{ item.get_chech_url }}">Check</a></td>
                                 </tr>
                             {% endfor %}
