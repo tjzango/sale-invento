@@ -2,8 +2,62 @@
 {% load widget_tweaks %}
 
 {% block title %} Sale{% endblock %}
-{% block head_title %}Sale{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+{% endblock %}
 {% block content %}
-   Sale
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <a href="{% url 'supplier:order_request' %}">
+                    <button class="btn btn-primary btn-lg">New Sale</button>
+                </a>
+                <div class="table-responsive">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <i class="fa fa-times-circle"></i> {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Item</th>
+                            <th>Customer</th>
+                            <th>Contact</th>
+                            <th>Attained By</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sale in sales %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ sale.item }}</td>
+                                <td>{{ sale.supplier}}</td>
+                                <td>{{ sale.bill_no }}</td>
+                                <td>{{ sale.requested_by }}</td>
+                                <td>{{ sale.requested_price }}</td>
+                                <td>{{ sale.requested_quantity }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
+{% block script %}
+    <script src="/static/datatables/jquery.dataTables.js"></script>
+    <script src="/static/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/static/scripts/sb-admin-datatables.min.js"></script>
+{% endblock %}
