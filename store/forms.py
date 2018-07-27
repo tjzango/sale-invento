@@ -37,4 +37,4 @@ class StockOrderForm(forms.ModelForm):
 
     class Meta:
         model = RequestOrder
-        fields = ('price', 'quantity')
+        fields = ('recieved_price', 'requantity')
