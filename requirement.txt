@@ -27,7 +27,7 @@ PySocks==1.6.7
 python-openid==2.2.5
 pytz==2018.3
 requests==2.18.4
-ruamel-yaml==0.15.35
+ruamel-yaml==0.15.46
 six==1.11.0
 SQLAlchemy==1.2.5
 typed-ast==1.1.0
