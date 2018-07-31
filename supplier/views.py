@@ -76,18 +76,11 @@ def order_request(request):
 def order_stock(request, key):
     order = get_object_or_404(RequestOrder, id=key)
     form = StockOrderForm(request.POST or None)
-    user = get_object_or_404(Account, user=request.user)
     if form.is_valid():
-        order.price = form.cleaned_data.get('price')
-        order.quantity = form.cleaned_data.get('quantity')
+        order.received_price = form.cleaned_data.get('received_price')
+        order.received_quantity = form.cleaned_data.get('received_quantity')
         order.stocked = True
         order.save()
-        Stock.objects.create(
-            item=order.item,
-            quantity=order.quantity,
-            remaining=order.quantity,
-            added_by=user, order=order,
-            )
         messages.success(request, "Received Items --> store")
         return redirect('supplier:order')
     context = {

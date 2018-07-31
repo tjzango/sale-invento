@@ -30,11 +30,11 @@ class RequestOrderForm(forms.ModelForm):
 
 
 class StockOrderForm(forms.ModelForm):
-    quantity = forms.IntegerField(required=True, widget=forms.NumberInput(
+    received_quantity = forms.IntegerField(required=True, widget=forms.NumberInput(
         attrs={'placeholder': 'Requested Quantity', 'class': 'form-control'}))
-    price = forms.IntegerField(required=True, widget=forms.NumberInput(
+    received_price = forms.IntegerField(required=True, widget=forms.NumberInput(
         attrs={'placeholder': 'Price', 'class': 'form-control'}))
 
     class Meta:
         model = RequestOrder
-        fields = ('recieved_price', 'requantity')
+        fields = ('received_quantity', 'received_price')
