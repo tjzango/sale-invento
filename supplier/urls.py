@@ -1,3 +1,5 @@
+# The is the file responsible for url route in customer application
+# it will join with muslim/urls application
 from django.conf.urls import url
 
 from supplier.views import (
@@ -10,7 +12,7 @@ from supplier.views import (
     order_request,
 )
 
-
+# this are the url patterns their name and vue there pointing to
 urlpatterns = [
     url(r'^$', supplier, name='index'),
     url(r'^add/', supplier_add, name='add'),
