@@ -6,7 +6,7 @@ from store.models import (
     RequestOrder
 )
 
-
+# This is the form fiels used for addding new supplier
 class AddSupplierForm(forms.ModelForm):
     name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'e.g Haruna Tijjani', 'class': 'form-control'}))
@@ -15,6 +15,7 @@ class AddSupplierForm(forms.ModelForm):
     address = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': '', 'class': 'form-control'}))
 
+    # Use supplier db table
     class Meta:
         model = Supplier
         fields = ('name', 'contact', 'address')

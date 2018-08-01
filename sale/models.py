@@ -8,6 +8,7 @@ from customer.models import Customer
 
 
 # Create your models here.
+# Sale models defination
 class Sale(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
@@ -16,6 +17,7 @@ class Sale(models.Model):
         return sum(item.get_cost() for item in self.items.all())
 
 
+# Invoice models defination
 class Invoice(models.Model):
     sale = models.ForeignKey(Sale, related_name='items')
     product = models.ForeignKey(Stock,  related_name='order_items')

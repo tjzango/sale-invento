@@ -14,6 +14,7 @@ ACTIONS = (
 
 
 # Create your models here.
+# Item defination models defination
 class Item(models.Model):
     name = models.CharField(max_length=100)
     price = models.PositiveIntegerField()
@@ -29,6 +30,7 @@ class Item(models.Model):
         return sum(item.quantity for item in self.items.all())
 
 
+# Request order defination
 class RequestOrder(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
@@ -45,6 +47,7 @@ class RequestOrder(models.Model):
         return '{}, {}'.format(self.item, self.supplier)
 
 
+# Stock  models defination
 class Stock(models.Model):
     item = models.ForeignKey(Item, related_name='items')
     quantity = models.PositiveIntegerField(default=0)

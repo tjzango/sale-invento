@@ -1,6 +1,7 @@
+# This file contain all the forms we use in our index application
 from django import forms
 
-
+# This is the form used in user rigistation it contain first & last name, email, password and another password
 class UserRegistrationForm(forms.Form):
     first_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'e.g Haroun'}))
@@ -14,6 +15,7 @@ class UserRegistrationForm(forms.Form):
         attrs={'placeholder': 'Strong Password'}))
 
 
+# This is the form fields used in user login page
 class UserLoginForm(forms.Form):
     username = forms.EmailField(required=True, widget=forms.EmailInput(
         attrs={'placeholder': 'haroun@gmail.com'}))
@@ -21,6 +23,7 @@ class UserLoginForm(forms.Form):
         attrs={'placeholder': '*******'}))
 
 
+# Form field used for user profile form
 class UserProfileForm(forms.Form):
     contact = forms.CharField(required=True,  widget=forms.TextInput(
         attrs={'placeholder': 'e.g 08012345678'}))
@@ -28,17 +31,6 @@ class UserProfileForm(forms.Form):
         attrs={'placeholder': 'e.g Haroun'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'e.g Exe John'}))
-
-
-class BankInfo(forms.Form):
-    bank_name = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'e.g Farmers Bank'}))
-    account_no = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'e.g 1234567890'}))
-    account_name = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'e.g Farmers Account'}))
-    sort_code = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'Sort Code'}))
 
 
 class AddAdminForm(forms.Form):

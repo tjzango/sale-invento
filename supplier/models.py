@@ -7,6 +7,7 @@ from index.models import User
 
 
 # Create your models here.
+# Ssupplier models defination
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
     address = models.TextField()
