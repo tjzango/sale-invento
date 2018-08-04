@@ -1,4 +1,7 @@
+# The is the file responsible for url route in customer application
+# it will join with muslim/urls application
 from django.conf.urls import url
+# An import statement, It actually import the view that will be loaded if any url is requested
 from django.contrib.auth.views import (
     login,
     logout,
@@ -12,7 +15,7 @@ from django.contrib.auth.views import (
 
 from index.views import profile
 
-
+# this are the url patterns their name and view there are pointing with root url map
 urlpatterns = [
     url(r'^profile/$', profile, name='profile'),
     # logging

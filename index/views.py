@@ -15,6 +15,11 @@ from index.forms import UserProfileForm
 # Create your views here.
 @login_required
 def profile(request):
+    """
+    This view is responsible for
+    :param request:
+    :return:
+    """
     form = UserProfileForm(request.POST or None, request.FILES)
     if form.is_valid():
         account = get_object_or_404(Account, user=request.user)

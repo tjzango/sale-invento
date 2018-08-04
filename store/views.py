@@ -20,6 +20,12 @@ from index.models import Account
 # Create your views here.
 @login_required
 def store(request):
+    """
+    This view is responsible of quering all item in the store
+    and lodding the store.html file which will display all items from 'store' context
+    :param request:
+    :return:
+    """
     context = {
         'store': Item.objects.all()
     }
@@ -27,6 +33,13 @@ def store(request):
 
 
 def item(request, value):
+    """
+    This view is responsible for allowing users view
+    statement of a particular item in the store
+    :param request:
+    :param value:
+    :return:
+    """
     item = get_object_or_404(Item, id=value)
 
     context = {
