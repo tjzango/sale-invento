@@ -8,4 +8,9 @@ from django.shortcuts import render
 # Create your views here.
 @login_required
 def index(request):
+    """
+    This view is responsible for loading the sale.html file
+    :param request:
+    :return:
+    """
     return render(request, 'sale.html')
