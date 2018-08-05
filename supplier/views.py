@@ -16,7 +16,6 @@ from supplier.forms import AddSupplierForm
 
 from store.models import (
     RequestOrder,
-    Stock
 )
 from store.forms import (
     RequestOrderForm,

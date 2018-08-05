@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from store.models import Stock
+from store.models import RequestOrder
 from customer.models import Customer
 
 
@@ -20,7 +20,7 @@ class Sale(models.Model):
 # Invoice models defination
 class Invoice(models.Model):
     sale = models.ForeignKey(Sale, related_name='items')
-    product = models.ForeignKey(Stock,  related_name='order_items')
+    product = models.ForeignKey(RequestOrder,  related_name='order_items')
     invoice_no = models.CharField(max_length=20)
     quantity = models.IntegerField()
     price = models.PositiveIntegerField()

@@ -27,12 +27,12 @@ class Item(models.Model):
         return reverse('store:item', args=[self.id])
 
     def get_remaining_quantity(self):
-        return sum(item.quantity for item in self.items.all())
+        return sum(item.received_quantity for item in self.items.all())
 
 
 # Request order defination
 class RequestOrder(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, related_name='items')
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     requested_by = models.ForeignKey(Account, on_delete=models.CASCADE)
     bill_no = models.CharField(max_length=20)
@@ -47,14 +47,3 @@ class RequestOrder(models.Model):
         return '{}, {}'.format(self.item, self.supplier)
 
 
-# Stock  models defination
-class Stock(models.Model):
-    item = models.ForeignKey(Item, related_name='items')
-    quantity = models.PositiveIntegerField(default=0)
-    added_by = models.ForeignKey(Account, on_delete=models.CASCADE)
-    order = models.ForeignKey(RequestOrder, on_delete=models.CASCADE)
-    remaining = models.PositiveIntegerField(default=0)
-    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-
-    def __str__(self):
-        return '{}'.format(self.item)

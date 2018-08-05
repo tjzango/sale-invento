@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from store.models import (
     Item,
-    Stock
+    RequestOrder
 )
 from store.forms import AddItemForm
 from index.models import Account
@@ -43,7 +43,7 @@ def item(request, value):
     item = get_object_or_404(Item, id=value)
 
     context = {
-        'stock': Stock.objects.filter(item=item)
+        'stock': RequestOrder.objects.filter(item=item)
     }
     return render(request, 'item.html', context)
 
