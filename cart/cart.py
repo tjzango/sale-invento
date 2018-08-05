@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django.conf import settings
-from store.models import Stock
+from store.models import RequestOrder
 
 
 class Cart(object):
@@ -28,7 +28,7 @@ class Cart(object):
         """
         stock_ids = self.cart.keys()
         # get the stock objects and add them to the cart
-        stocks = Stock.objects.filter(id__in=stock_ids)
+        stocks = RequestOrder.objects.filter(id__in=stock_ids)
         for stock in stocks:
             self.cart[str(stock.id)]['stock'] = stock
 
