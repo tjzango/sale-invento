@@ -9,7 +9,7 @@
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
-                <a href="{% url 'supplier:order_request' %}">
+                <a href="{% url 'sale:new_sale' %}">
                     <button class="btn btn-primary btn-lg">New Sale</button>
                 </a>
                 <div class="table-responsive">
@@ -39,12 +39,12 @@
                         {% for sale in sales %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ sale.item }}</td>
+                                <td>{{ sale.product }}</td>
                                 <td>{{ sale.supplier}}</td>
                                 <td>{{ sale.bill_no }}</td>
                                 <td>{{ sale.requested_by }}</td>
                                 <td>{{ sale.requested_price }}</td>
-                                <td>{{ sale.requested_quantity }}</td>
+                                <td>{{ sale.quantity }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

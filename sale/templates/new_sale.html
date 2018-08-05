@@ -1,10 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load supplier_modifier %}
+
+{% block title %} Sell{% endblock %}
+{% block content %}
+    <div class="panel panel-profile" xmlns="http://www.w3.org/1999/html">
+        <div class="clearfix">
+            <div class="profile-detail">
+                <div class="profile-info">
+                    <h4 class="heading">New Sale</h4>
+                    <div class="col-sm-6">
+                        <form class="form-auth-small" method="post">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                        <i class="fa fa-times-circle"></i> {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% csrf_token %}
+
+                            <ul class="list-unstyled list-justify">{{ e }}
+                                Customer:
+                                <li>
+                                    {{ form.customer | add_class:'form-control input' }}
+                                </li>
+                                <li>
+                                    Amount Paid:
+                                    {{ form.amount_paid | add_class:'form-control ' }}
+                                </li>
+                                <li><br/>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary">Sell</button>
+                                    </div>
+                                    <br/>
+                                    All Items
+                                    <ul>
+                                        {% for item in items %}
+                                            <li>
+                                                <a href="{% url 'sale:cart' item.id %}">{{ item.name }}</a>({{ item.get_remaining_quantity }})
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- END PROFILE DETAIL -->
+                        </form>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled list-justify">
+                            <li>
+                                <b>Total Quantity: </b> {{ cart.count }}&nbsp;&nbsp;&nbsp;
+                                <b>Total Price: </b> {{ cart.summary | money_format }} &nbsp;&nbsp;&nbsp;
+                                <b><a href="{% url 'sale:clear_cart' %}">Clear Cart </a></b>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                    {% for item in cart %}
+                                        <tr>
+                                            <td>{{ item.product.name }}</td>
+                                            <td>
+                                                <a href="{% url 'sale:cart_decrease' item.product.id item.quantity %}">(-)</a>
+                                                {{ item.quantity }}
+                                                <a href="{% url 'sale:cart' item.product.id %}">(+)</a><br>
+                                                <form action="{% url "sale:cart" item.product.id %}" method="post">
+                                                    {{ quantity.unit }}
+                                                    <input type="submit" value="Update">
+                                                    {% csrf_token %}
+                                                </form>
+                                            </td>
+                                            <td>{{ item.total_price | money_format }}</td>
+                                            <td><a href="{% url 'sale:remove_item' item.product.id %}">Remove</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
