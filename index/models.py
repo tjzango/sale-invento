@@ -27,7 +27,7 @@ class Account(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 # Employee Defination
