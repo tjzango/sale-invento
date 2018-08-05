@@ -91,8 +91,7 @@ def order_stock(request, key):
 
 
 def supplier_detail(request, key):
-    goods = RequestOrder.objects.filter(supplier__id=key)
     context = {
-        'goods': goods
+        'goods': RequestOrder.objects.filter(supplier__id=key)
     }
     return render(request, 'supplier_detail.html', context)
