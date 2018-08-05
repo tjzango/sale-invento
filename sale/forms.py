@@ -1,11 +1,17 @@
 from django import forms
-from customer.models import Customer
+from sale.models import Order
 
 
-class CustomerForm(forms.ModelForm):
-    name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'e.g Muslim'}))
-    contact = forms.CharField(required=True, widget=forms.NumberInput(attrs={'placeholder': 'eg 07064353426'}))
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 1000)]
+
+
+class QuantityForm(forms.Form):
+    unit = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
+
+
+class OrderSaveForm(forms.ModelForm):
+    amount_paid = forms.CharField(required=True, widget=forms.NumberInput(attrs={'placeholder': 'eg 1000'}))
 
     class Meta:
-        model = Customer
-        fields = ('name', 'contact')
+        model = Order
+        fields = ('customer', 'amount_paid')
