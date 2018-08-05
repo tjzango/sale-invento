@@ -10,9 +10,9 @@ STATUS = (('Married', 'Married'),
           ('Single', 'Single'))
 
 LEVEL = (
-    ('1', 'Administrator'),
-    ('2', 'Cashier'),
-    ('3', 'Store Keeper')
+    ('Administrator', 'Administrator'),
+    ('Cashier', 'Cashier'),
+    ('Store Keeper', 'Store Keeper')
 )
 
 

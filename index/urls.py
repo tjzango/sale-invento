@@ -13,10 +13,18 @@ from django.contrib.auth.views import (
     password_reset_complete,
 )
 
-from index.views import profile
+from index.views import (
+    users,
+    profile,
+    activate,
+    deactivate,
+)
 
 # this are the url patterns their name and view there are pointing with root url map
 urlpatterns = [
+    url(r'^users/$', users, name='users'),
+    url(r'^users/(?P<key>[0-9]+)/deactivate/$', deactivate, name='deactivate'),
+    url(r'^users/(?P<key>[0-9]+)/activate/$', activate, name='activate'),
     url(r'^profile/$', profile, name='profile'),
     # logging
     url(r'^login/$', login, name='login'),

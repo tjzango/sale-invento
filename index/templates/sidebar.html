@@ -2,9 +2,6 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
-                {% with path='store:index' title='Accounting' icon='fa fa-book' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
                 {% with path='store:index' title='Store' icon='lnr lnr-cart' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
@@ -20,7 +17,7 @@
                 {% with path='supplier:order' title='Order' icon='fa fa-shopping-basket' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
-                {% with path='store:index' title='Manage User' icon='fa fa-user-circle-o' %}
+                {% with path='users' title='Manage User' icon='fa fa-user-circle-o' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
                 {% with path='store:index' title='Manage Employees' icon='fa fa-user-md' %}

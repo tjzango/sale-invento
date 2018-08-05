@@ -7,7 +7,7 @@ from django.shortcuts import (
     get_object_or_404,
     redirect,
 )
-from index.models import Account
+from index.models import Account, User
 
 from index.forms import UserProfileForm
 
@@ -36,3 +36,27 @@ def profile(request):
             return redirect('/account')
     context = {'form': form}
     return render(request, 'profile.html', context)
+
+
+def users(request):
+    context = {
+        'users': Account.objects.all()
+    }
+    return render(request, 'users.html', context)
+
+
+def deactivate(request, key):
+    user = User.objects.get(id=key)
+    if user.is_staff:
+        messages.error(request, 'Cannot deactivate superuser')
+        return users(request)
+    user.is_active = False
+    user.save()
+    return users(request)
+
+
+def activate(request, key):
+    user = User.objects.get(id=key)
+    user.is_active = True
+    user.save()
+    return users(request)
