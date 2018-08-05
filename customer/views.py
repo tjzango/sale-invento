@@ -11,6 +11,7 @@ from django.contrib import messages
 # Importing forms amd database model
 from customer.models import Customer
 from customer.forms import AddCustomerForm
+from sale.models import OrderItem
 
 
 # Create your views here.
@@ -49,6 +50,13 @@ def customer_add(request):
     }
     return render(request, 'customer_add.html', context)
 
+
+def statement(request, key):
+    customer_transaction = OrderItem.objects.filter(order__customer_id=key)
+    context = {
+        'customer': customer_transaction
+    }
+    return render(request, 'statement.html', context)
 
 """
 def customer_detail(request, key):

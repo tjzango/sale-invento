@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
-
+{% load supplier_modifier %}
 {% block title %} Customer{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
@@ -9,9 +9,6 @@
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
-                <a href="{% url 'customer:add' %}">
-                    <button class="btn btn-primary btn-lg">Add Customer</button>
-                </a>
                 <div class="table-responsive">
                     {% if messages %}
                         {% for message in messages %}
@@ -23,26 +20,24 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">Customer Statement
+                       <thead>
                         <tr>
                             <th>S/N</th>
-                            <th>Name</th>
-                            <th>Contact</th>
-                            <th>View Statement</th>
+                            <th>Item</th>
+                            <th>Attained By</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for customer in customers %}
+                        {% for sale in customer %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ customer.name }}</td>
-                                <td>{{ customer.contact }}</td>
-                                <td>
-                                    <a href="{% url 'customer:statement' customer.id  %}">
-                                        <button class="btn btn-danger">View</button>
-                                    </a>
-                                </td>
+                                <td>{{ sale.product }}</td>
+                                <td>{{ sale.attained_by }}</td>
+                                <td>{{ sale.price | money_format }}</td>
+                                <td>{{ sale.quantity }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
