@@ -9,6 +9,7 @@ from sale.forms import OrderSaveForm, QuantityForm
 from cart.cart import Cart
 from store.models import Item
 from sale.models import Order, OrderItem
+from index.models import Account
 
 
 # Create your views here.
@@ -41,7 +42,8 @@ def new_sale(request):
                 order=order,
                 product=item.product,
                 price=item.unit_price,
-                quantity=item.quantity
+                quantity=item.quantity,
+                attained_by=Account.objects.get(user=request.user)
             )
         cart.clear()
         return redirect('/sale/')

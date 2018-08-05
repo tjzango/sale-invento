@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+{% load supplier_modifier %}
 
 {% block title %} Sale{% endblock %}
 {% block style %}
@@ -29,7 +30,6 @@
                             <th>S/N</th>
                             <th>Item</th>
                             <th>Customer</th>
-                            <th>Contact</th>
                             <th>Attained By</th>
                             <th>Price</th>
                             <th>Quantity</th>
@@ -40,10 +40,9 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ sale.product }}</td>
-                                <td>{{ sale.supplier}}</td>
-                                <td>{{ sale.bill_no }}</td>
-                                <td>{{ sale.requested_by }}</td>
-                                <td>{{ sale.requested_price }}</td>
+                                <td>{{ sale.order.customer.name }}</td>
+                                <td>{{ sale.attained_by }}</td>
+                                <td>{{ sale.price | money_format }}</td>
                                 <td>{{ sale.quantity }}</td>
                             </tr>
                         {% endfor %}
