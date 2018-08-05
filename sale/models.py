@@ -10,7 +10,7 @@ from customer.models import Customer
 # Sale models defination
 from django.db import models
 from store.models import RequestOrder
-
+from index.models import Account
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer)
@@ -32,6 +32,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Item, related_name='order_items')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+    attained_by = models.ForeignKey(Account)
 
     def __str__(self):
         return '{}'.format(self.id)
