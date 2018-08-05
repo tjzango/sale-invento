@@ -20,7 +20,7 @@ olefile==0.45.1
 Pillow==5.0.0
 pycosat==0.6.3
 pycparser==2.18
-pylint==2.0.0
+pylint==2.1.0
 pyOpenSSL==17.5.0
 pyquery==1.4.0
 PySocks==1.6.7
