@@ -70,7 +70,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'index.utilities.user',
-                'cart.context_processors.cart',
             ],
         },
     },
@@ -145,4 +144,4 @@ EMAIL_HOST_PASSWORD = 'your_password'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-CART_SESSION_ID = 'cart'
+# CART_SESSION_ID = 'cart'
