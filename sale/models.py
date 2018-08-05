@@ -9,24 +9,33 @@ from customer.models import Customer
 
 # Create your models here.
 # Sale models defination
-class Sale(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+from django.db import models
+from store.models import RequestOrder
+
+
+class Order(models.Model):
+    customer = models.ForeignKey(Customer)
     created = models.DateTimeField(auto_now_add=True)
+    amount_paid = models.IntegerField(default=False)
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return 'Order {}'.format(self.id)
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
 
-# Invoice models defination
-class Invoice(models.Model):
-    sale = models.ForeignKey(Sale, related_name='items')
-    product = models.ForeignKey(RequestOrder,  related_name='order_items')
-    invoice_no = models.CharField(max_length=20)
-    quantity = models.IntegerField()
-    price = models.PositiveIntegerField()
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items')
+    product = models.ForeignKey(RequestOrder, related_name='order_items')
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return "{} {}".format(self.product.item.name, self.invoice_no)
+        return '{}'.format(self.id)
 
     def get_cost(self):
         return self.price * self.quantity
