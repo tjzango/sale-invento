@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models
 
-from store.models import RequestOrder
+from store.models import Item
 from customer.models import Customer
 
 
@@ -16,7 +15,7 @@ from store.models import RequestOrder
 class Order(models.Model):
     customer = models.ForeignKey(Customer)
     created = models.DateTimeField(auto_now_add=True)
-    amount_paid = models.IntegerField(default=False)
+    amount_paid = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('-created',)
@@ -30,7 +29,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items')
-    product = models.ForeignKey(RequestOrder, related_name='order_items')
+    product = models.ForeignKey(Item, related_name='order_items')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 
