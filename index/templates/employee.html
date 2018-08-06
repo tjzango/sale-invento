@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} Employee{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+{% endblock %}
+{% block content %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <a href="{% url 'customer:add' %}">
+                    <button class="btn btn-primary btn-lg">Add An Employee</button>
+                </a>
+                <div class="table-responsive">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <i class="fa fa-times-circle"></i> {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Date of Birth</th>
+                            <th>Status</th>
+                            <th>Salary</th>
+                            <th>Joined On</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for employee in employees %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.address }}</td>
+                                <td>{{ employee.dob }}</td>
+                                <td>{{ employee.status }}</td>
+                                <td>{{ employee.salary }}</td>
+                                <td>{{ employee.joined_on }}</td>
+                                <td>
+                                    <a href="{% url 'customer:statement' employee.id  %}">
+                                        <button class="btn btn-danger">View</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/datatables/jquery.dataTables.js"></script>
+    <script src="/static/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/static/scripts/sb-admin-datatables.min.js"></script>
+{% endblock %}

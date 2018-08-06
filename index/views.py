@@ -7,7 +7,7 @@ from django.shortcuts import (
     get_object_or_404,
     redirect,
 )
-from index.models import Account, User
+from index.models import Account, User, Employee
 
 from index.forms import UserProfileForm
 
@@ -60,3 +60,11 @@ def activate(request, key):
     user.is_active = True
     user.save()
     return users(request)
+
+
+@login_required
+def manage_employees(request):
+    context = {
+        'employees': Employee.objects.all(),
+    }
+    return render(request, 'employee.html', context)

@@ -18,6 +18,7 @@ from index.views import (
     profile,
     activate,
     deactivate,
+    manage_employees,
 )
 
 # this are the url patterns their name and view there are pointing with root url map
@@ -26,7 +27,11 @@ urlpatterns = [
     url(r'^users/(?P<key>[0-9]+)/deactivate/$', deactivate, name='deactivate'),
     url(r'^users/(?P<key>[0-9]+)/activate/$', activate, name='activate'),
     url(r'^profile/$', profile, name='profile'),
-    # logging
+
+    # Employee
+    url(r'^employee/$', manage_employees, name='employees'),
+
+    # logging<
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
 
