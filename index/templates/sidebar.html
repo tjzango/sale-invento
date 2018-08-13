@@ -2,27 +2,35 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
-                {% with path='store:index' title='Store' icon='lnr lnr-cart' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
-                {% with path='customer:index' title='Customer' icon='lnr lnr-users' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
-                {% with path='sale:index' title='Sale' icon='lnr lnr-wheelchair' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
-                {% with path='supplier:index' title='Supplier' icon='fa fa-users' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
-                {% with path='supplier:order' title='Order' icon='fa fa-shopping-basket' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
-                {% with path='users' title='Manage User' icon='fa fa-user-circle-o' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
-                {% with path='employees' title='Manage Employees' icon='fa fa-user-md' %}
-                    {% include 'components/nav_link.html' %}
-                {% endwith %}
+                {% if user.employee.level == 'Store Keeper' or user.employee.level == 'Manager' %}
+                    {% with path='store:index' title='Store' icon='lnr lnr-cart' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                {% endif %}
+                {% if user.employee.level == 'Cashier' or user.employee.level == 'Manager' %}
+                    {% with path='sale:index' title='Sale' icon='lnr lnr-wheelchair' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                    {% with path='customer:index' title='Customer' icon='lnr lnr-users' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                {% endif %}
+                {% if user.employee.level == 'Store Keeper' or user.employee.level == 'Manager' %}
+                    {% with path='supplier:index' title='Supplier' icon='fa fa-users' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                {% endif %}
+                {% if user.employee.level == 'Manager' %}
+                    {% with path='supplier:order' title='Order' icon='fa fa-shopping-basket' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                    {% with path='users' title='Manage User' icon='fa fa-user-circle-o' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                    {% with path='employees' title='Manage Employees' icon='fa fa-user-md' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                {% endif %}
                 {% with path='profile' title='Profile' icon='lnr lnr-user' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
