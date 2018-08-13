@@ -9,7 +9,7 @@
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
-                <a href="{% url 'customer:add' %}">
+                <a href="{% url 'add_employee' %}">
                     <button class="btn btn-primary btn-lg">Add An Employee</button>
                 </a>
                 <div class="table-responsive">
@@ -32,6 +32,7 @@
                             <th>Date of Birth</th>
                             <th>Status</th>
                             <th>Salary</th>
+                            <th>Level</th>
                             <th>Joined On</th>
                         </tr>
                         </thead>
@@ -44,12 +45,8 @@
                                 <td>{{ employee.dob }}</td>
                                 <td>{{ employee.status }}</td>
                                 <td>{{ employee.salary }}</td>
+                                <td>{{ employee.level }}</td>
                                 <td>{{ employee.joined_on }}</td>
-                                <td>
-                                    <a href="{% url 'customer:statement' employee.id  %}">
-                                        <button class="btn btn-danger">View</button>
-                                    </a>
-                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

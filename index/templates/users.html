@@ -8,6 +8,9 @@
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
+                <a href="{% url 'add_user' %}">
+                    <button class="btn btn-primary btn-lg">Add System User</button>
+                </a>
                 <div class="table-responsive">
                     {% if messages %}
                         {% for message in messages %}
@@ -19,7 +22,7 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">Users
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <th>S/N</th>

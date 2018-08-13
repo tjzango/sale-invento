@@ -1,10 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load widget_tweaks %}
+
+{% block title %} Add Employee{% endblock %}
+{% block content %}
+    {% for ee in e %}
+    {{ e }}
+    {% endfor %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <form class="form-auth-small" method="post">
+                {% csrf_token %}
+                <div class="profile-detail">
+                    <div class="profile-info">
+                        <h4 class="heading">Add Employee</h4>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled list-justify">
+                                <li>
+                                    Name:
+                                    <span class="col-md-10">
+                                        {{ form.name | add_class:'form-control input' }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Status:
+                                    <span class="col-md-10">
+                                        {{ form.status | add_class:'form-control input' }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    D O B:
+                                    <span class="col-md-10">
+                                        {{ form.dob | add_class:'form-control input' }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Address:
+                                    <span class="col-md-10">
+                                        {{ form.address }}
+                                    </span>
+                                </li>
+                                <br/>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled list-justify">
+                                <li>
+                                    Level:
+                                    <span class="col-md-10">
+                                        {{ form.level | add_class:'form-control input' }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Joined:
+                                    <span class="col-md-10">
+                                        {{ form.joined_on }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li>
+                                    Salary: ₦
+                                    <span class="col-md-10">
+                                        {{ form.salary | add_class:'form-control input' }}
+                                    </span>
+                                </li>
+                                <br/>
+                                <li><span class="col-md-10"></span></li>
+                                <br/>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary">Request</button>
+                    </div>
+                    <!-- END PROFILE DETAIL -->
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
