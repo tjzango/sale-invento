@@ -28,7 +28,8 @@ from index.models import Account
 @login_required
 def supplier(request):
     context = {
-        'suppliers': Supplier.objects.all()
+        'suppliers': Supplier.objects.all(),
+        'transactions': RequestOrder.objects.all().count()
     }
     return render(request, 'supplier.html', context)
 
@@ -80,6 +81,7 @@ def order_stock(request, key):
     if form.is_valid():
         order.received_price = form.cleaned_data.get('received_price')
         order.received_quantity = form.cleaned_data.get('received_quantity')
+        order.remaining_quantity = form.cleaned_data.get('received_quantity')
         order.stocked = True
         order.save()
         messages.success(request, "Received Items --> store")
