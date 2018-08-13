@@ -4,8 +4,39 @@
 {% block title %} Order{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/css/custome-style.css">
 {% endblock %}
 {% block content %}
+    <div class="row">
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state">
+                <h4 class="c-state__number">{{ orders.count }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Total Orders</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-down"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--warning">
+                <h4 class="c-state__number">{{ completed }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Total Completed</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-down"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--success">
+                <h4 class="c-state__number">{{ in_completed }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Not Stocked</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-up"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+
+    </div>
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
@@ -41,12 +72,13 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ order.item }}</td>
-                                <td>{{ order.supplier}}</td>
+                                <td>{{ order.supplier }}</td>
                                 <td>{{ order.bill_no }}</td>
                                 <td>{{ order.requested_by }}</td>
                                 <td>{{ order.requested_price }}</td>
                                 <td>{{ order.requested_quantity }}</td>
-                                <td><a href="{% url 'supplier:order_stock' order.id %}">{% if order.stocked %}Completed{% else %}Stock{% endif %}</a>
+                                <td><a href="{% url 'supplier:order_stock' order.id %}">{% if order.stocked %}
+                                    Completed{% else %}Stock{% endif %}</a>
                                 </td>
                             </tr>
                         {% endfor %}

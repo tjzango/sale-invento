@@ -1,6 +1,6 @@
 # This file contain all the forms we use in our index application
 from django import forms
-from index.models import Employee, Account
+from index.models import Employee, Account, Message
 
 # This is the form used in user rigistation it contain first & last name, email, password and another password
 class UserRegistrationForm(forms.Form):
@@ -81,3 +81,9 @@ class UserAddForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ('employee',)
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('body', 'user')

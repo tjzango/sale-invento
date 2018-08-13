@@ -50,7 +50,9 @@ def supplier_add(request):
 @login_required
 def order(request):
     context = {
-        'orders': RequestOrder.objects.filter(action='receive')
+        'orders': RequestOrder.objects.filter(action='receive'),
+        'completed': RequestOrder.objects.filter(stocked=True).count(),
+        'in_completed': RequestOrder.objects.filter(stocked=False).count()
     }
     return render(request, 'order.html', context)
 

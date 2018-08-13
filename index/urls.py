@@ -16,10 +16,12 @@ from django.contrib.auth.views import (
 from index.views import (
     users,
     profile,
+    message,
     activate,
     add_user,
     deactivate,
     add_employee,
+    send_message,
     manage_employees,
 )
 
@@ -30,6 +32,9 @@ urlpatterns = [
     url(r'^users/(?P<key>[0-9]+)/deactivate/$', deactivate, name='deactivate'),
     url(r'^users/(?P<key>[0-9]+)/activate/$', activate, name='activate'),
     url(r'^profile/$', profile, name='profile'),
+
+    url(r'^message/$', message, name='message'),
+    url(r'^message/send/$', send_message, name='send_message'),
 
     # Employee
     url(r'^employee/$', manage_employees, name='employees'),

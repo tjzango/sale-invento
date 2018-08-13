@@ -27,7 +27,7 @@ class Item(models.Model):
         return reverse('store:item', args=[self.id])
 
     def get_remaining_quantity(self):
-        return sum(item.received_quantity for item in self.items.all())
+        return sum(item.remaining_quantity for item in self.items.all())
 
 
 # Request order defination
@@ -42,8 +42,12 @@ class RequestOrder(models.Model):
     received_price = models.PositiveIntegerField(default=0)
     stocked = models.BooleanField(default=False)
     action = models.CharField(choices=ACTIONS, max_length=20)
+    remaining_quantity = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return '{}, {}'.format(self.item, self.supplier)
+
+    class Meta:
+        ordering = ['remaining_quantity']
 
 

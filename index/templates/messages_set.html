@@ -1,38 +1,17 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 
-{% block title %} Customer{% endblock %}
+{% block title %} Message{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="/static/css/custome-style.css">
 {% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col-sm-7 col-lg-6">
-            <div class="c-state">
-                <h4 class="c-state__number">{{ customers.count }}</h4>
-                <p style="font-size: 20px" class="c-state__status">Total Customers</p>
-                <span class="c-state__indicator">
-                    <i class="fa fa-arrow-circle-o-down"></i>
-                </span>
-            </div><!-- // c-state -->
-        </div>
-        <div class="col-sm-7 col-lg-6">
-            <div class="c-state c-state--success">
-                <h4 class="c-state__number">{{ total_tranc }}</h4>
-                <p style="font-size: 20px" class="c-state__status">Total Transactions</p>
-                <span class="c-state__indicator">
-                            <i class="fa fa-arrow-circle-o-up"></i>
-                        </span>
-            </div><!-- // c-state -->
-        </div>
-
-    </div>
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
-                <a href="{% url 'customer:add' %}">
-                    <button class="btn btn-primary btn-lg">Add Customer</button>
+                <a href="{% url 'send_message' %}">
+                    <button class="btn btn-primary btn-lg">Send Message</button>
                 </a>
                 <div class="table-responsive">
                     {% if messages %}
@@ -49,22 +28,16 @@
                         <thead>
                         <tr>
                             <th>S/N</th>
-                            <th>Name</th>
-                            <th>Contact</th>
-                            <th>View Statement</th>
+                            <th>Message</th>
+                            <th>USer</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for customer in customers %}
+                        {% for message in message_set %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ customer.name }}</td>
-                                <td>{{ customer.contact }}</td>
-                                <td>
-                                    <a href="{% url 'customer:statement' customer.id %}">
-                                        <button class="btn btn-danger">View</button>
-                                    </a>
-                                </td>
+                                <td>{{ message.body }}</td>
+                                <td>{{ message.user }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

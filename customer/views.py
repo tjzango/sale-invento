@@ -26,7 +26,8 @@ def customer(request):
     :return html file to be loaded and the context:
     """
     context = {
-        'customers': Customer.objects.all()
+        'customers': Customer.objects.all(),
+        'total_tranc': OrderItem.objects.all().count()
     }
     return render(request, 'customer.html', context)
 
@@ -51,7 +52,6 @@ def customer_add(request):
     return render(request, 'customer_add.html', context)
 
 
-@login_required
 def statement(request, key):
     customer_transaction = OrderItem.objects.filter(order__customer_id=key)
     context = {

@@ -8,9 +8,9 @@ from django.shortcuts import (
     get_object_or_404,
     redirect,
 )
-from index.models import Account, User, Employee
+from index.models import Account, User, Employee, Message
 
-from index.forms import UserProfileForm, EmployeeForm, UserAddForm
+from index.forms import UserProfileForm, EmployeeForm, UserAddForm, MessageForm
 
 
 # Create your views here.
@@ -84,8 +84,11 @@ def profile(request):
 
 @login_required
 def users(request):
+    usr = Account.objects.all()
     context = {
-        'users': Account.objects.all()
+        'users': usr,
+        'active': usr.filter(user__is_active=True),
+        'inactive': usr.filter(user__is_active=False)
     }
     return render(request, 'users.html', context)
 
@@ -111,8 +114,12 @@ def activate(request, key):
 
 @login_required
 def manage_employees(request):
+    employee = Employee.objects.all()
+    acc = Account.objects.all().count()
     context = {
-        'employees': Employee.objects.all(),
+        'employees': employee,
+        'non_users_emp': employee.count() - acc,
+        'users_emp': acc
     }
     return render(request, 'employee.html', context)
 
@@ -128,3 +135,24 @@ def add_employee(request):
         "form": form,
     }
     return render(request, 'add_employee.html', context)
+
+
+@login_required
+def message(request):
+    context = {
+        'message_set': Message.objects.all()
+    }
+    return render(request, 'messages_set.html', context)
+
+
+@login_required
+def send_message(request):
+    form = MessageForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Successfully send message')
+        return redirect('/message')
+    context = {
+        'form': form
+    }
+    return render(request, 'message.html', context)

@@ -50,3 +50,11 @@ class Account(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Message(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    body = models.CharField(max_length=200)
+
+    def __str__(self):
+        return "{} to {}".format(self.body, self.user)
