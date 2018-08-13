@@ -56,6 +56,7 @@ def new_sale(request):
     return render(request, 'new_sale.html', context=context)
 
 
+@login_required
 def add_item_to_cart(request, key):
     """
     :param request:
@@ -84,6 +85,7 @@ def add_item_to_cart(request, key):
     return redirect('/sale/new/')
 
 
+@login_required
 def decrease_quantity(request, key, quantity):
     item = Item.objects.get(id=key)
     cart = Cart(request)
@@ -98,6 +100,7 @@ def decrease_quantity(request, key, quantity):
     return redirect('/sale/new/')
 
 
+@login_required
 def increase_quantity(request, key, quantity):
     item = Item.objects.get(id=key)
     cart = Cart(request)
@@ -106,12 +109,14 @@ def increase_quantity(request, key, quantity):
     return redirect('/sale/new/')
 
 
+@login_required
 def add_to_cart(request, product_id, quantity):
     item = Item.objects.get(id=product_id)
     cart = Cart(request)
     cart.add(item, item.price, quantity)
 
 
+@login_required
 def remove_from_cart(request, key):
     product = Item.objects.get(id=key)
     cart = Cart(request)
@@ -119,12 +124,14 @@ def remove_from_cart(request, key):
     return redirect('/sale/new/')
 
 
+@login_required
 def clear_cart(request):
     cart = Cart(request)
     cart.clear()
     return new_sale(request)
 
 
+@login_required
 def sale_completed(request):
     pass
 

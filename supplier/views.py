@@ -54,6 +54,7 @@ def order(request):
     return render(request, 'order.html', context)
 
 
+@login_required
 def order_request(request):
     if request.method == "POST":
         form = RequestOrderForm(request.POST)
@@ -72,6 +73,7 @@ def order_request(request):
     return render(request, 'order_request.html', context)
 
 
+@login_required
 def order_stock(request, key):
     order = get_object_or_404(RequestOrder, id=key)
     form = StockOrderForm(request.POST or None)
@@ -89,6 +91,7 @@ def order_stock(request, key):
     return render(request, 'order_stock.html', context)
 
 
+@login_required
 def supplier_detail(request, key):
     context = {
         'goods': RequestOrder.objects.filter(supplier__id=key)

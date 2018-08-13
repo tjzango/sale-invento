@@ -51,6 +51,7 @@ def customer_add(request):
     return render(request, 'customer_add.html', context)
 
 
+@login_required
 def statement(request, key):
     customer_transaction = OrderItem.objects.filter(order__customer_id=key)
     context = {

@@ -32,6 +32,7 @@ def store(request):
     return render(request, 'store.html', context)
 
 
+@login_required
 def item(request, value):
     """
     This view is responsible for allowing users view
