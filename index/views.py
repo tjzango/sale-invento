@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import (
     render,
@@ -15,6 +16,40 @@ from index.forms import UserProfileForm, EmployeeForm, UserAddForm
 # Create your views here.
 def add_user(request):
     form = UserAddForm(request.POST or None)
+    if form.is_valid():
+        account = form.save(commit=False)
+        password = form.cleaned_data.get('password')
+        password_ = form.cleaned_data.get('password_')
+        username = form.cleaned_data.get('username')
+        if account.employee:
+            employee = Account.objects.filter(employee=account.employee)
+            if employee.count() >= 1:
+                messages.error(request, "Employee already exist")
+                return redirect('/users/add/')
+
+        if username:
+            user_name = User.objects.filter(username=username)
+            if user_name:
+                messages.error(request, "Username already exist")
+                return redirect('/users/add/')
+        if password != password_:
+            messages.error(request, "Passwords does not match")
+            return redirect('/users/add/')
+        if len(password) <= 5:
+            messages.error(request, "Passwords must contain at least 6 characters")
+            return redirect('/users/add/')
+        if (account.employee.level == 'Cleaner') | (account.employee.level == 'Other'):
+            messages.error(request, "This emplyee can't use the system\nCleaner or other")
+            return redirect('/users/add')
+        user = User.objects.create(
+            first_name=form.cleaned_data.get('first_name'),
+            last_name=form.cleaned_data.get('last_name'),
+            username=username
+        )
+        user.set_password(form.cleaned_data.get('username'))
+        account.user = user
+        account.save()
+        return redirect('/users/')
     context = {
         'form': form
     }

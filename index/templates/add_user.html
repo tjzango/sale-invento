@@ -4,31 +4,35 @@
 
 {% block title %} Add Employee{% endblock %}
 {% block content %}
-    {% for ee in e %}
-        {{ e }}
-    {% endfor %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <i class="fa fa-times-circle"></i> {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="panel panel-profile">
         <div class="clearfix">
             <form class="form-auth-small" method="post">
                 {% csrf_token %}
                 <div class="profile-detail">
                     <div class="profile-info">
-                        <h4 class="heading">Add Employee</h4>
+                        <h4 class="heading">Add User</h4>
                         <div class="col-sm-6">
                             {{ form.first_name | add_class:'form-control input' }}
                             <br/>
                             {{ form.last_name | add_class:'form-control input' }}
                             <br/>
-                            {{ form.employee | add_class:'form-control input' }}
+                            Employee:{{ form.employee | add_class:'form-control input' }}
                             <br/>
                         </div>
                         <div class="col-sm-6">
                             {{ form.username }}
                             <br/>
-                            {{ form.password_  }}
+                            {{ form.password_ }}
                             <br/>
                             {{ form.password }}
                             <br/>
