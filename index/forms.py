@@ -1,6 +1,6 @@
 # This file contain all the forms we use in our index application
 from django import forms
-from index.models import Employee
+from index.models import Employee, Account
 
 # This is the form used in user rigistation it contain first & last name, email, password and another password
 class UserRegistrationForm(forms.Form):
@@ -44,15 +44,41 @@ class AddAdminForm(forms.Form):
     password_ = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': 'Confirm Password'}))
 
-    class EmployeeForm(forms.ModelForm):
-        class Meta:
-            model = Employee
-            fields = (
-                'name',
-                'address',
-                'status',
-                'dob',
-                'salary',
-                'joined_on',
-                'level',
-            )
+
+class EmployeeForm(forms.ModelForm):
+    address = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': 'Enter Address', 'class': 'form-control'}
+    ))
+    joined_on = forms.DateField(required=True, widget=forms.DateInput(
+        attrs={'placeholder': 'MM-DD-YYYY', 'class': 'form-control'}
+    ))
+
+    class Meta:
+        model = Employee
+        fields = (
+            'name',
+            'address',
+            'status',
+            'dob',
+            'salary',
+            'joined_on',
+            'level',
+        )
+
+
+class UserAddForm(forms.ModelForm):
+    first_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': 'e.g Haroun'}))
+    last_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': 'e.g Exe John'}))
+    password = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': 'Strong Password'}))
+    password_ = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': 'Strong Password'}))
+
+    class Meta:
+        model = Account
+        fields = (
+            'user',
+            'employee'
+        )
