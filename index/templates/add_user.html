@@ -5,10 +5,10 @@
 {% block title %} Add Employee{% endblock %}
 {% block content %}
     {% for ee in e %}
-    {{ e }}
+        {{ e }}
     {% endfor %}
     {% for message in messages %}
-    {{ message }}
+        {{ message }}
     {% endfor %}
     <div class="panel panel-profile">
         <div class="clearfix">
@@ -18,43 +18,20 @@
                     <div class="profile-info">
                         <h4 class="heading">Add Employee</h4>
                         <div class="col-sm-6">
-                            <ul class="list-unstyled list-justify">
-                                <li>
-                                    <span class="col-md-10">
-                                        {{ form.first_name | add_class:'form-control input' }}
-                                    </span>
-                                </li>
-                                <br/>
-                                <li>
-                                    <span class="col-md-10">
-                                        {{ form.last_name | add_class:'form-control input' }}
-                                    </span>
-                                </li>
-                                <br/>
-                                <li>
-                                    <span class="col-md-10">
-                                        {{ form.employee | add_class:'form-control input' }}
-                                    </span>
-                                </li>
-                                <br/>
-
-                            </ul>
+                            {{ form.first_name | add_class:'form-control input' }}
+                            <br/>
+                            {{ form.last_name | add_class:'form-control input' }}
+                            <br/>
+                            {{ form.employee | add_class:'form-control input' }}
+                            <br/>
                         </div>
                         <div class="col-sm-6">
-                            <ul class="list-unstyled list-justify">
-                                <li>
-                                    <span class="col-md-10">
-                                        {{ form.password_ | add_class:'form-control input' }}
-                                    </span>
-                                </li>
-                                <br/>
-                                <li>
-                                    <span class="col-md-10">
-                                        {{ form.password }}
-                                    </span>
-                                </li>
-                                <br/>
-                            </ul>
+                            {{ form.username }}
+                            <br/>
+                            {{ form.password_  }}
+                            <br/>
+                            {{ form.password }}
+                            <br/>
                         </div>
                     </div>
                     <div class="text-center">

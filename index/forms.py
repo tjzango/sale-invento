@@ -68,13 +68,15 @@ class EmployeeForm(forms.ModelForm):
 
 class UserAddForm(forms.ModelForm):
     first_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': 'e.g Haroun'}))
+        attrs={'placeholder': 'First Name e.g Musleem', 'class': 'form-control input' }))
+    username = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': 'Username e.g Musleem', 'class': 'form-control input'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': 'e.g Exe John'}))
+        attrs={'placeholder': 'Lastname e.g Exe John', 'class': 'form-control input' }))
     password = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': 'Strong Password'}))
+        attrs={'placeholder': 'Strong Password', 'class': 'form-control input' }))
     password_ = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': 'Strong Password'}))
+        attrs={'placeholder': 'Retype Password', 'class': 'form-control input' }))
 
     class Meta:
         model = Account

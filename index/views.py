@@ -9,13 +9,14 @@ from django.shortcuts import (
 )
 from index.models import Account, User, Employee
 
-from index.forms import UserProfileForm, EmployeeForm
+from index.forms import UserProfileForm, EmployeeForm, UserAddForm
 
 
 # Create your views here.
 def add_user(request):
+    form = UserAddForm(request.POST or None)
     context = {
-
+        'form': form
     }
     return render(request, 'add_user.html', context)
 
