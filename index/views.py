@@ -9,10 +9,16 @@ from django.shortcuts import (
 )
 from index.models import Account, User, Employee
 
-from index.forms import UserProfileForm
+from index.forms import UserProfileForm, EmployeeForm
 
 
 # Create your views here.
+def add_user(request):
+    context = {
+
+    }
+    return render(request, 'add_user.html', context)
+
 @login_required
 def profile(request):
     """
@@ -68,3 +74,16 @@ def manage_employees(request):
         'employees': Employee.objects.all(),
     }
     return render(request, 'employee.html', context)
+
+
+@login_required(login_url='/?next=/')
+def add_employee(request):
+    form = EmployeeForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Add employee {}'.format(form.cleaned_data['name']))
+        return redirect("/employee")
+    context = {
+        "form": form,
+    }
+    return render(request, 'add_employee.html', context)
