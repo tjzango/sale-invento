@@ -5,8 +5,30 @@
 {% block title %} Sale{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/css/custome-style.css">
 {% endblock %}
 {% block content %}
+    <div class="row">
+        <div class="col-sm-7 col-lg-6">
+            <div class="c-state">
+                <h4 class="c-state__number">{{ total }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Total Sales</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-down"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-6">
+            <div class="c-state c-state--success">
+                <h4 class="c-state__number">{{ total_amount_made | money_format }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Total Amount Made</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-up"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+
+    </div>
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
@@ -28,10 +50,12 @@
                         <thead>
                         <tr>
                             <th>S/N</th>
+                            <th>Invoice</th>
                             <th>Item</th>
                             <th>Customer</th>
                             <th>Attained By</th>
-                            <th>Price</th>
+                            <th>Unit Price</th>
+                            <th>Amount Paid</th>
                             <th>Quantity</th>
                         </tr>
                         </thead>
@@ -39,10 +63,12 @@
                         {% for sale in sales %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
+                                <td>{{ sale.order.id }}</td>
                                 <td>{{ sale.product }}</td>
                                 <td>{{ sale.order.customer.name }}</td>
                                 <td>{{ sale.attained_by }}</td>
-                                <td>{{ sale.price | money_format }}</td>
+                                <td>{{ sale.price }}</td>
+                                <td>{{ sale.order.amount_paid | money_format }}</td>
                                 <td>{{ sale.quantity }}</td>
                             </tr>
                         {% endfor %}

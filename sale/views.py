@@ -2,12 +2,12 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404
 from django.contrib import messages
 
 from sale.forms import OrderSaveForm, QuantityForm
 from cart.cart import Cart
-from store.models import Item
+from store.models import Item, RequestOrder
 from sale.models import Order, OrderItem
 from index.models import Account
 
@@ -20,8 +20,15 @@ def index(request):
     :param request:
     :return:
     """
+    sales = OrderItem.objects.all()
+    order = Order.objects.all()
+    total_amount_made = sum(item.amount_paid for item in order)
+    for item in sales:
+        price = item.price * item.order.amount_paid
     context = {
-        'sales': OrderItem.objects.all()
+        'sales': sales,
+        'total': sales.count(),
+        'total_amount_made': total_amount_made
     }
     return render(request, 'sale.html', context)
 
@@ -38,14 +45,29 @@ def new_sale(request):
         order = order_form.save()
         cart = Cart(request)
         for item in cart:
+            try:
+                remain_item = RequestOrder.objects.filter(item=item.product)
+                for i in remain_item:
+                    if i.remaining_quantity <= int(item.quantity):
+                        i.remaining_quantity = 0
+                        i.save()
+                    else:
+                        i.remaining_quantity = int(i.remaining_quantity) - int(item.quantity)
+                        i.save()
+                print('yeas')
+            except Exception as e:
+                messages.error(request, e)
+
             OrderItem.objects.create(
                 order=order,
                 product=item.product,
                 price=item.unit_price,
                 quantity=item.quantity,
-                attained_by=Account.objects.get(user=request.user)
+                attained_by=Account.objects.get(user=request.user),
             )
-        cart.clear()
+            cart.clear()
+
+        messages.success(request, 'Sale Completed >- Print Receipt')
         return redirect('/sale/')
     context = {
         'form': OrderSaveForm,
@@ -91,12 +113,6 @@ def decrease_quantity(request, key, quantity):
     cart = Cart(request)
     qty = int(quantity) - 1
     cart.update(quantity=qty, product=item, unit_price=item.price)
-    context = {
-        'form': OrderSaveForm,
-        'items': Item.objects.all(),
-        'cart': Cart(request),
-        'quantity': QuantityForm()
-    }
     return redirect('/sale/new/')
 
 
@@ -136,6 +152,7 @@ def sale_completed(request):
     pass
 
 
+@login_required
 def remove_item(request, key):
     item = Item.objects.get(id=key)
     cart = Cart(request)

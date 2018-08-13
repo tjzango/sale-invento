@@ -12,6 +12,7 @@ from django.db import models
 from store.models import RequestOrder
 from index.models import Account
 
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer)
     created = models.DateTimeField(auto_now_add=True)
@@ -33,9 +34,13 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
     attained_by = models.ForeignKey(Account)
+    with_some = models.BooleanField(default=True)
 
     def __str__(self):
         return '{}'.format(self.id)
 
     def get_cost(self):
         return self.price * self.quantity
+
+    def get_sale_cost(self):
+        return self.order.amount_paid * self.quantity
