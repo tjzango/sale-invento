@@ -3,8 +3,39 @@
 {% block title %} Users{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/css/custome-style.css">
 {% endblock %}
 {% block content %}
+    <div class="row">
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state">
+                <h4 class="c-state__number">{{ users.count }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Total Users</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-down"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--success">
+                <h4 class="c-state__number">{{ active.count }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Active Users</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-up"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--warning">
+                <h4 class="c-state__number">{{ inactive.count }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Inactive Users</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-down"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+
+    </div>
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
