@@ -14,6 +14,7 @@ from index.forms import UserProfileForm, EmployeeForm, UserAddForm
 
 
 # Create your views here.
+@login_required
 def add_user(request):
     form = UserAddForm(request.POST or None)
     if form.is_valid():
@@ -55,6 +56,7 @@ def add_user(request):
     }
     return render(request, 'add_user.html', context)
 
+
 @login_required
 def profile(request):
     """
@@ -80,6 +82,7 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 
+@login_required
 def users(request):
     context = {
         'users': Account.objects.all()
@@ -87,6 +90,7 @@ def users(request):
     return render(request, 'users.html', context)
 
 
+@login_required
 def deactivate(request, key):
     user = User.objects.get(id=key)
     if user.is_staff:
@@ -97,6 +101,7 @@ def deactivate(request, key):
     return users(request)
 
 
+@login_required
 def activate(request, key):
     user = User.objects.get(id=key)
     user.is_active = True
@@ -112,7 +117,7 @@ def manage_employees(request):
     return render(request, 'employee.html', context)
 
 
-@login_required(login_url='/?next=/')
+@login_required
 def add_employee(request):
     form = EmployeeForm(request.POST or None)
     if form.is_valid():
