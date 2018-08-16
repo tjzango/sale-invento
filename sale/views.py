@@ -5,10 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_list_or_404
 from django.contrib import messages
 
-from sale.forms import OrderSaveForm, QuantityForm, DebtForm
+from sale.forms import OrderSaveForm, QuantityForm, DebtForm, ExpenseForm
 from cart.cart import Cart
 from store.models import Item, RequestOrder
-from sale.models import Order, OrderItem
+from sale.models import Order, OrderItem, Expense
 from index.models import Account
 
 
@@ -194,3 +194,17 @@ def debtors_info(request, key):
         'debtor': debtor
     }
     return render(request, 'pay.html', context)
+
+
+
+@login_required
+def expense(request):
+    form = ExpenseForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/sale/expense/')
+    context = {
+        'form': form,
+        'expenses': Expense.objects.all()
+    }
+    return render(request, 'expense.html', context)

@@ -47,3 +47,8 @@ class OrderItem(models.Model):
 
     def get_sale_cost(self):
         return self.order.amount_paid * self.quantity
+
+
+class Expense(models.Model):
+    name = models.CharField(max_length=100)
+    amount = models.PositiveIntegerField(default=1)
