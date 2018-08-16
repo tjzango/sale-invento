@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} Pay Balance{% endblock %}
+{% block content %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="panel-heading">
+                    <h3 align='center' class="panel-title">
+                        {{ debtor.customer.name }} payment of <a href="">invoice {{ debtor.id }}</a>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <h2></h2>
+                    <form method="post">{% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-addon">₦</span>
+                            {{ form.balance | add_class:'form-control' }}
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-primary">Pay</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <!-- Page level plugin JavaScript-->
+    <script src="/static/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="/static/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="/static/scripts/sb-admin-datatables.min.js"></script>
+{% endblock %}
