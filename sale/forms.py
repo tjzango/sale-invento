@@ -18,3 +18,8 @@ class OrderSaveForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('customer', 'cash_paid', 'bank_paid')
+
+
+class DebtForm(forms.Form):
+    balance = forms.CharField(required=False, widget=forms.NumberInput(
+        attrs={'placeholder': 'eg 1000', 'value': 0}))

@@ -19,6 +19,7 @@ class Order(models.Model):
     cash_paid = models.IntegerField(default=0)
     bank_paid = models.IntegerField(default=0)
     amount_paid = models.IntegerField(default=0)
+    balance = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('-created',)

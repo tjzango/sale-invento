@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_list_or_404
 from django.contrib import messages
 
-from sale.forms import OrderSaveForm, QuantityForm
+from sale.forms import OrderSaveForm, QuantityForm, DebtForm
 from cart.cart import Cart
 from store.models import Item, RequestOrder
 from sale.models import Order, OrderItem
@@ -40,14 +40,16 @@ def new_sale(request):
     :param request:
     :return request, new_sale.html, context{form, items}:
     """
+    cart = Cart(request)
     order_form = OrderSaveForm(request.POST or None)
     if order_form.is_valid():
         order = order_form.save(commit=False)
         cash = order_form.cleaned_data.get('cash_paid')
         bank = order_form.cleaned_data.get('bank_paid')
         order.amount_paid = cash + bank
+        order.balance = int(cart.summary()) - int(order.amount_paid)
+        print(order.balance)
         order.save()
-        cart = Cart(request)
         for item in cart:
             try:
                 remain_item = RequestOrder.objects.filter(item=item.product)
@@ -58,7 +60,7 @@ def new_sale(request):
                     else:
                         i.remaining_quantity = int(i.remaining_quantity) - int(item.quantity)
                         i.save()
-                print('yeas')
+
             except Exception as e:
                 messages.error(request, e)
 
@@ -168,3 +170,27 @@ def remove_item(request, key):
         'quantity': QuantityForm()
     }
     return render(request, 'new_sale.html', context)
+
+
+@login_required
+def debtors(request):
+    context = {
+        'debtors': Order.objects.filter(balance__gt=0)
+    }
+    return render(request, 'debtors.html', context)
+
+
+@login_required
+def debtors_info(request, key):
+    debtor = Order.objects.get(id=key)
+    form = DebtForm(request.POST or None)
+    if form.is_valid():
+        balance = debtor.balance
+        debtor.balance = int(balance) - int(form.cleaned_data.get('balance'))
+        debtor.save()
+        return redirect('/sale/debtors/')
+    context = {
+        'form': form,
+        'debtor': debtor
+    }
+    return render(request, 'pay.html', context)

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} Deptors{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/css/custome-style.css">
+{% endblock %}
+{% block content %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <i class="fa fa-times-circle"></i> {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Balance</th>
+                            <th>Invoice No</th>
+                            <th>Pay</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for debtor in debtors %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ debtor.customer.name }}</td>
+                                <td>{{ debtor.balance }}</td>
+                                <td>{{ debtor.id }}</td>
+                                <td>
+                                    <a href="{% url 'sale:debtors' debtor.id %}">
+                                        <button class="btn btn-danger">Pay</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/datatables/jquery.dataTables.js"></script>
+    <script src="/static/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/static/scripts/sb-admin-datatables.min.js"></script>
+{% endblock %}
