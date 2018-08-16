@@ -42,7 +42,11 @@ def new_sale(request):
     """
     order_form = OrderSaveForm(request.POST or None)
     if order_form.is_valid():
-        order = order_form.save()
+        order = order_form.save(commit=False)
+        cash = order_form.cleaned_data.get('cash_paid')
+        bank = order_form.cleaned_data.get('bank_paid')
+        order.amount_paid = cash + bank
+        order.save()
         cart = Cart(request)
         for item in cart:
             try:

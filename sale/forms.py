@@ -10,8 +10,11 @@ class QuantityForm(forms.Form):
 
 
 class OrderSaveForm(forms.ModelForm):
-    amount_paid = forms.CharField(required=True, widget=forms.NumberInput(attrs={'placeholder': 'eg 1000'}))
+    bank_paid = forms.CharField(required=False, widget=forms.NumberInput(
+        attrs={'placeholder': 'eg 1000', 'value': 0}))
+    cash_paid = forms.CharField(required=False, widget=forms.NumberInput(
+        attrs={'placeholder': 'eg 1000', 'value': 0}))
 
     class Meta:
         model = Order
-        fields = ('customer', 'amount_paid')
+        fields = ('customer', 'cash_paid', 'bank_paid')

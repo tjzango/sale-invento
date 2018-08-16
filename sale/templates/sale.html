@@ -50,11 +50,13 @@
                         <thead>
                         <tr>
                             <th>S/N</th>
-                            <th>Invoice</th>
+                            <th>I/D</th>
                             <th>Item</th>
                             <th>Customer</th>
                             <th>Attained By</th>
                             <th>Unit Price</th>
+                            <th>Cash</th>
+                            <th>Bank</th>
                             <th>Amount Paid</th>
                             <th>Quantity</th>
                         </tr>
@@ -68,6 +70,8 @@
                                 <td>{{ sale.order.customer.name }}</td>
                                 <td>{{ sale.attained_by }}</td>
                                 <td>{{ sale.price }}</td>
+                                <td>{{ sale.order.cash_paid | money_format }}</td>
+                                <td>{{ sale.order.bank_paid | money_format }}</td>
                                 <td>{{ sale.order.amount_paid | money_format }}</td>
                                 <td>{{ sale.quantity }}</td>
                             </tr>

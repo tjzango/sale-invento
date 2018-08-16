@@ -16,6 +16,8 @@ from index.models import Account
 class Order(models.Model):
     customer = models.ForeignKey(Customer)
     created = models.DateTimeField(auto_now_add=True)
+    cash_paid = models.IntegerField(default=0)
+    bank_paid = models.IntegerField(default=0)
     amount_paid = models.IntegerField(default=0)
 
     class Meta:
