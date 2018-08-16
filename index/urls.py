@@ -22,6 +22,7 @@ from index.views import (
     deactivate,
     add_employee,
     send_message,
+    message_tag,
     manage_employees,
 )
 
@@ -34,6 +35,7 @@ urlpatterns = [
     url(r'^profile/$', profile, name='profile'),
 
     url(r'^message/$', message, name='message'),
+    url(r'^__tag/(?P<key>[0-9]+)/$', message_tag, name='message_tag'),
     url(r'^message/send/$', send_message, name='send_message'),
 
     # Employee

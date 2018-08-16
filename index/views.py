@@ -156,3 +156,12 @@ def send_message(request):
         'form': form
     }
     return render(request, 'message.html', context)
+
+
+@login_required
+def message_tag(request, key):
+    _message = Message.objects.get(id=key)
+    _message.visible = False
+    _message.save()
+    return redirect('/sale')
+

@@ -55,6 +55,7 @@ class Account(models.Model):
 class Message(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     body = models.CharField(max_length=200)
+    visible = models.BooleanField(default=True)
 
     def __str__(self):
         return "{} to {}".format(self.body, self.user)
