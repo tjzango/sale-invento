@@ -29,7 +29,7 @@
                         <tr>
                             <th>S/N</th>
                             <th>Message</th>
-                            <th>USer</th>
+                            <th>User</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +38,7 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ message.body }}</td>
                                 <td>{{ message.user }}</td>
+                                <td>{% if message.visible %}Yes{% else %}No{% endif %}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
