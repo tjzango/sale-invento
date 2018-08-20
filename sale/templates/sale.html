@@ -58,6 +58,7 @@
                             <th>Amount Paid</th>
                             <th>Balance</th>
                             <th>Quantity</th>
+                            <th>Invoice</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -67,11 +68,16 @@
                                 <td>{{ sale.order.id }}</td>
                                 <td>{{ sale.product }}</td>
                                 <td>{{ sale.order.customer.name }}</td>
-                                <td>{{ sale.attained_by }}</td>
+                                <td>{{ sale.order.attained_by }}</td>
                                 <td>{{ sale.price }}</td>
                                 <td>{{ sale.order.amount_paid | money_format }}</td>
                                 <td>{{ sale.order.balance | money_format }}</td>
                                 <td>{{ sale.quantity }}</td>
+                                <td>
+                                    <a href="{% url 'sale:invoice' sale.order.id %}">
+                                        <button>Print</button>
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

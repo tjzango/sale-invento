@@ -1,0 +1,17 @@
+<ul>
+    <li>Customer Name:{{ order.customer.name }}</li>
+    <li>Balance: {{ order.balance }}</li>
+    <li>Amount Paid: {{ order.amount_paid }}</li>
+    <li>Bank: {{ order.bank_paid }}</li>
+    <li>Cash: {{ order.cash_paid }}</li>
+</ul>
+
+<br/>
+<ul>
+{% for item in order_item_set %}
+    Item {{ forloop.counter }}
+    <li>Name: {{ item.product}}</li>
+    <li>Price: {{ item.price}}</li>
+    <li>Quantity: {{ item.quantity}}</li><br/>
+{% endfor %}
+</ul>

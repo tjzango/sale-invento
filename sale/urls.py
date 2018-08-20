@@ -4,6 +4,7 @@ from django.conf.urls import url
 
 from sale.views import (
     index,
+    invoice,
     new_sale,
     expense,
     debtors,
@@ -20,6 +21,7 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^new/$', new_sale, name='new_sale'),
     url(r'^debtors/$', debtors, name='debtors'),
+    url(r'^invoice/(?P<key>[0-9]+)/$', invoice, name='invoice'),
     url(r'^debtors/(?P<key>[0-9]+)/$', debtors_info, name='debtors'),
     url(r'^expense/$', expense, name='expense'),
     url(r'^new/cart/(?P<key>[0-9]+)/(?P<quantity>[0-9]+)/-/$', decrease_quantity, name='cart_decrease'),

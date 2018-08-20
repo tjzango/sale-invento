@@ -2,14 +2,17 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, get_list_or_404
 from django.contrib import messages
+from django.template.loader import get_template
+
 
 from sale.forms import OrderSaveForm, QuantityForm, DebtForm, ExpenseForm
 from cart.cart import Cart
 from store.models import Item, RequestOrder
 from sale.models import Order, OrderItem, Expense
 from index.models import Account
+from utility import render_to_pdf
 
 
 # Create your views here.
@@ -46,9 +49,9 @@ def new_sale(request):
         order = order_form.save(commit=False)
         cash = order_form.cleaned_data.get('cash_paid')
         bank = order_form.cleaned_data.get('bank_paid')
-        order.amount_paid = cash + bank
+        order.amount_paid = int(cash) + int(bank)
         order.balance = int(cart.summary()) - int(order.amount_paid)
-        print(order.balance)
+        order.attained_by = Account.objects.get(user=request.user)
         order.save()
         for item in cart:
             try:
@@ -69,7 +72,6 @@ def new_sale(request):
                 product=item.product,
                 price=item.unit_price,
                 quantity=item.quantity,
-                attained_by=Account.objects.get(user=request.user),
             )
             cart.clear()
 
@@ -208,3 +210,25 @@ def expense(request):
         'expenses': Expense.objects.all()
     }
     return render(request, 'expense.html', context)
+
+
+@login_required
+def invoice(request, key):
+    template = get_template('invoice.html')
+    order =  get_object_or_404(Order, id=key)
+    context = {
+        'order': order,
+        'order_item_set': get_list_or_404(OrderItem, order=order)
+    }
+    template.render(context)
+    pdf = render_to_pdf('invoice.html', context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "invoice_for_{}_{}.pdf".format(order.customer.name, key)
+        content = "inline; filename='%s'" % filename
+        download = request.GET.get("download")
+        if download:
+            content = "attachment; filename='%s'" % filename
+        response['Content-Disposition'] = content
+        return response
+    return HttpResponse("Not found")

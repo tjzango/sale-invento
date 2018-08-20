@@ -20,6 +20,7 @@ class Order(models.Model):
     bank_paid = models.IntegerField(default=0)
     amount_paid = models.IntegerField(default=0)
     balance = models.IntegerField(default=0)
+    attained_by = models.ForeignKey(Account)
 
     class Meta:
         ordering = ('-created',)
@@ -36,7 +37,6 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Item, related_name='order_items')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
-    attained_by = models.ForeignKey(Account)
     with_some = models.BooleanField(default=True)
 
     def __str__(self):
