@@ -2,17 +2,35 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, get_list_or_404
-from django.contrib import messages
 from django.template.loader import get_template
+from django.contrib import messages
+from django.shortcuts import (
+    render,
+    redirect,
+    HttpResponse,
+    get_list_or_404,
+    get_object_or_404
+)
 
 
-from sale.forms import OrderSaveForm, QuantityForm, DebtForm, ExpenseForm
-from cart.cart import Cart
-from store.models import Item, RequestOrder
-from sale.models import Order, OrderItem, Expense
-from index.models import Account
 from utility import render_to_pdf
+from index.models import Account
+from cart.cart import Cart
+from store.models import (
+    Item,
+    RequestOrder
+)
+from sale.models import (
+    Order,
+    Expense,
+    OrderItem,
+)
+from sale.forms import (
+    DebtForm,
+    ExpenseForm,
+    QuantityForm,
+    OrderSaveForm,
+)
 
 
 # Create your views here.
@@ -26,8 +44,6 @@ def index(request):
     sales = OrderItem.objects.all()
     order = Order.objects.all()
     total_amount_made = sum(item.amount_paid for item in order)
-    for item in sales:
-        price = item.price * item.order.amount_paid
     context = {
         'sales': sales,
         'total': sales.count(),
@@ -198,7 +214,6 @@ def debtors_info(request, key):
     return render(request, 'pay.html', context)
 
 
-
 @login_required
 def expense(request):
     form = ExpenseForm(request.POST or None)
@@ -215,7 +230,7 @@ def expense(request):
 @login_required
 def invoice(request, key):
     template = get_template('invoice.html')
-    order =  get_object_or_404(Order, id=key)
+    order = get_object_or_404(Order, id=key)
     context = {
         'order': order,
         'order_item_set': get_list_or_404(OrderItem, order=order)
