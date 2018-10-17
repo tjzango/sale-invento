@@ -2,6 +2,11 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
+                {% if user.employee.level == 'Manager' %}
+                    {% with path='report' title='Report' icon='lnr lnr-cart' %}
+                        {% include 'components/nav_link.html' %}
+                    {% endwith %}
+                {% endif %}
                 {% if user.employee.level == 'Store Keeper' or user.employee.level == 'Manager' %}
                     {% with path='store:index' title='Store' icon='lnr lnr-cart' %}
                         {% include 'components/nav_link.html' %}
@@ -39,6 +44,9 @@
                     {% with path='sale:debtors' title='Debtors' icon='fa fa-user' %}
                         {% include 'components/nav_link.html' %}
                     {% endwith %}
+                    {% with path='customer_requests' title='Customer Requests' icon='fa fa-refresh' %}
+                    {% include 'components/nav_link.html' %}
+                {% endwith %}
                 {% endif %}
                 {% with path='profile' title='Profile' icon='lnr lnr-user' %}
                     {% include 'components/nav_link.html' %}

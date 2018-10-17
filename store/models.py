@@ -43,6 +43,7 @@ class RequestOrder(models.Model):
     stocked = models.BooleanField(default=False)
     action = models.CharField(choices=ACTIONS, max_length=20)
     remaining_quantity = models.PositiveIntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}, {}'.format(self.item, self.supplier)

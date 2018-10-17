@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load supplier_modifier %}
+
+{% block title %} Sale{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/css/custome-style.css">
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-7 col-lg-6">
+            <div class="c-state">
+                <h4 class="c-state__number">{{ requests.count }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Total Requests</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-down"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-6">
+            <div class="c-state c-state--success">
+                <h4 class="c-state__number"> {{ today_requests }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Today's Request</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-up"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+
+    </div>
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Product(s)</th>
+                            <th>Collecting On</th>
+                            <th>Key</th>
+                            <th>Request On</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for request in requests %}
+                            <tr>
+
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ request.name }}</td>
+                                <td>
+                                    {% for list in request.product_list %}
+                                        <p>{{ list }}</p>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ request.collecting }}</td>
+                                <td>{{ request.key }}</td>
+                                <td>{{ request.created }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/datatables/jquery.dataTables.js"></script>
+    <script src="/static/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/static/scripts/sb-admin-datatables.min.js"></script>
+{% endblock %}

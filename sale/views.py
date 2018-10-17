@@ -24,6 +24,7 @@ from sale.models import (
     Order,
     Expense,
     OrderItem,
+    DebtPayment,
 )
 from sale.forms import (
     DebtForm,
@@ -193,7 +194,8 @@ def remove_item(request, key):
 @login_required
 def debtors(request):
     context = {
-        'debtors': Order.objects.filter(balance__gt=0)
+        'debtors': Order.objects.filter(balance__gt=0),
+        'paid_debt': DebtPayment.objects.filter()
     }
     return render(request, 'debtors.html', context)
 
@@ -204,6 +206,7 @@ def debtors_info(request, key):
     form = DebtForm(request.POST or None)
     if form.is_valid():
         balance = debtor.balance
+        DebtPayment.objects.create(balance=debtor.balance, paid=int(form.cleaned_data.get('balance')), order=debtor)
         debtor.balance = int(balance) - int(form.cleaned_data.get('balance'))
         debtor.save()
         return redirect('/sale/debtors/')
@@ -233,17 +236,7 @@ def invoice(request, key):
     order = get_object_or_404(Order, id=key)
     context = {
         'order': order,
-        'order_item_set': get_list_or_404(OrderItem, order=order)
+        'order_item_set': get_list_or_404(OrderItem, order=order),
+        'debt': DebtPayment.objects.filter(order=order)
     }
-    template.render(context)
-    pdf = render_to_pdf('invoice.html', context)
-    if pdf:
-        response = HttpResponse(pdf, content_type='application/pdf')
-        filename = "invoice_for_{}_{}.pdf".format(order.customer.name, key)
-        content = "inline; filename='%s'" % filename
-        download = request.GET.get("download")
-        if download:
-            content = "attachment; filename='%s'" % filename
-        response['Content-Disposition'] = content
-        return response
-    return HttpResponse("Not found")
+    return render(request, 'invoicee.html', context)

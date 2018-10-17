@@ -15,6 +15,8 @@ from django.contrib.auth.views import (
 
 from index.views import (
     users,
+    index,
+    report,
     profile,
     message,
     activate,
@@ -24,10 +26,16 @@ from index.views import (
     send_message,
     message_tag,
     manage_employees,
+    customer_requests,
+    customer_request_order,
 )
 
 # this are the url patterns their name and view there are pointing with root url map
 urlpatterns = [
+    url(r'^$', index, name='index'),
+    url(r'^request/order/customers/$', customer_request_order, name='customer_request_order'),
+    url(r'^customer/request/$', customer_requests, name='customer_requests'),
+
     url(r'^users/$', users, name='users'),
     url(r'^users/add/$', add_user, name='add_user'),
     url(r'^users/(?P<key>[0-9]+)/deactivate/$', deactivate, name='deactivate'),
@@ -35,6 +43,7 @@ urlpatterns = [
     url(r'^profile/$', profile, name='profile'),
 
     url(r'^message/$', message, name='message'),
+    url(r'report/$', report, name='report'),
     url(r'^__tag/(?P<key>[0-9]+)/$', message_tag, name='message_tag'),
     url(r'^message/send/$', send_message, name='send_message'),
 

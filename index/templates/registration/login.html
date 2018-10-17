@@ -29,8 +29,11 @@
         <div class="vertical-align-middle">
             <div class="auth-box lockscreen clearfix">
                 <div class="content">
-                    <div class="logo text-center"><h3>Ashing & Brothers</h3></div>
-                    <h4 class="text-center">Login</h4>
+                    <div class="logo text-center">
+                        <h3><a href="{% url 'index' %}">Ashing & Brothers</a></h3>
+                        <h4>Nigeria LTD</h4>
+                    </div>
+                        <h4 class="text-center" style="color: cadetblue">Login (Ashing Users)</h4>
                     <form class="form-auth-small" method="post">{% csrf_token %}
                         <div class="alert alert-{% if message.tags == 'success'%}success{% endif %} alert-block">
                         {% if form.errors %}
@@ -59,7 +62,14 @@
 
                         <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
                         <div class="bottom">
-                            <span class="helper-text"><i class="fa fa-lock"></i> <a href="{% url 'password_reset' %}">Forgot password?</a></span>
+                            <span class="helper-text">
+                                <i class="fa fa-lock"></i>
+                                <a href="{% url 'password_reset' %}">Forgot password?</a>
+                            </span><br/>
+                            <span class="helper-text">
+                                <i class="fa fa-asterisk"></i>
+                                If you wan to book an order go to <a href="{% url 'customer_request_order' %}">book order</a> Page
+                            </span>
                         </div>
                     </form>
                 </div>

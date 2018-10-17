@@ -22,6 +22,8 @@ EMPLOYEE_LEVEL = (
     ('Store Keeper', 'Store Keeper'),
     ('Other', 'Other')
 )
+
+
 # Create your models here.
 # Users account defination e.g muslim has attribute user, contact and level
 # user has a forignkey to the User(first_name, last_name, password, username and email) models
@@ -59,3 +61,14 @@ class Message(models.Model):
 
     def __str__(self):
         return "{} to {}".format(self.body, self.user)
+
+
+class CustomerRequestOrder(models.Model):
+    name = models.CharField(max_length=100)
+    key = models.CharField(max_length=20)
+    collecting = models.CharField(max_length=100)
+    products = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def product_list(self):
+        return self.products.split('\r\n')

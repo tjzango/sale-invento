@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+{% load supplier_modifier %}
 
 {% block title %} Pay Balance{% endblock %}
 {% block content %}
@@ -10,6 +11,7 @@
                 <div class="panel-heading">
                     <h3 align='center' class="panel-title">
                         {{ debtor.customer.name }} payment of <a href="">invoice {{ debtor.id }}</a>
+                        Balance {{ debtor.balance | money_format }}
                     </h3>
                 </div>
                 <div class="panel-body">

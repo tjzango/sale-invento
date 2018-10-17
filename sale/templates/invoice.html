@@ -1,17 +1,80 @@
-<ul>
-    <li>Customer Name:{{ order.customer.name }}</li>
-    <li>Balance: {{ order.balance }}</li>
-    <li>Amount Paid: {{ order.amount_paid }}</li>
-    <li>Bank: {{ order.bank_paid }}</li>
-    <li>Cash: {{ order.cash_paid }}</li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
 
-<br/>
-<ul>
-{% for item in order_item_set %}
-    Item {{ forloop.counter }}
-    <li>Name: {{ item.product}}</li>
-    <li>Price: {{ item.price}}</li>
-    <li>Quantity: {{ item.quantity}}</li><br/>
-{% endfor %}
-</ul>
+<!-- Mirrored from s3-eu-west-1.amazonaws.com/htmlpdfapi.production/free_html5_invoice_templates/example1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Aug 2018 10:30:58 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Example 1</title>
+    <link rel="stylesheet" href="/static/css/invoice.css" media="all"/>
+</head>
+<body onload="window.print();">
+<header class="clearfix">
+    <h1>INVOICE NO: {{ order.id }}</h1>
+    <div id="company" class="clearfix">
+        <div>Asing And Brothers Nigeria LTD</div>
+        <div>No 32 Singa,<br/> Kano, Nigeria</div>
+        <div>+234(8)0 519-234-0450</div>
+        <div><a href="mailto:company@example.com">info@ashing.com</a></div>
+    </div>
+    <div id="project">
+        <div><span>CUSTOMER</span> {{ order.customer.name }}</div>
+        <div><span>CONTACT</span> {{ order.customer.contact }}</div>
+        <div><span>DATE</span> {{ order.created|date:'M D, Y' }}</div>
+        <div><span>Time</span> {{ order.created|date:'h: m' }}</div>
+    </div>
+</header>
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>S/N</th>
+            <th class="service">ITEM</th>
+            <th>PRICE</th>
+            <th>QTY</th>
+            <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in order_item_set %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td class="service">{{ item.product }}</td>
+                <td class="desc">{{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.get_cost }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="4" class="grand total">GRAND TOTAL</td>
+            <td class="grand total">₦{{ order.get_total_cost }}</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="grand total">AMOUNT PAID</td>
+            <td class="grand total">₦{{ order.amount_paid }}</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="grand total">BANK PAYMENT</td>
+            <td class="grand total">₦{{ order.bank_paid }}</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="grand total">CASH PAYMENT</td>
+            <td class="grand total">₦{{ order.cash_paid }}</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="grand total">BALANCE</td>
+            <td class="grand total">₦{{ order.balance }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+    </div>
+</main>
+<footer>
+    Invoice was created on a computer and is valid without the signature and seal.
+</footer>
+</body>
+
+<!-- Mirrored from s3-eu-west-1.amazonaws.com/htmlpdfapi.production/free_html5_invoice_templates/example1/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Aug 2018 10:30:59 GMT -->
+</html>

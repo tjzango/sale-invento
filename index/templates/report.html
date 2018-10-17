@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load supplier_modifier %}
+
+{% block title %} transactions{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/static/css/custome-style.css">
+{% endblock %}
+{% block content %}
+    {% comment %}
+    <div class="row">
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state">
+                <h4 class="c-state__number">{{ transactions.count }}</h4>
+                <p style="font-size: 20px" class="c-state__status">Total transactions(Today)</p>
+                <span class="c-state__indicator">
+                    <i class="fa fa-arrow-circle-o-down"></i>
+                </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--success">
+                <h4 class="c-state__number">{{ users_emp }}</h4>
+                <p style="font-size: 20px" class="c-state__status">transactionss (User)</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-up"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-4">
+            <div class="c-state c-state--warning">
+                <h4 class="c-state__number">{{ non_users_emp }}</h4>
+                <p style="font-size: 20px" class="c-state__status">transactions (non Users)</p>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-down"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+
+    </div>
+    {% endcomment %}
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+
+                            <th>Date/Time</th>
+                            <th>Customer/Supplier</th>
+                            <th>Purpose</th>
+                            <th>Invoice Id</th>
+                            <th>Credit</th>
+                            <th>Debit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in transactions %}
+                            {% if item.name %}
+                                <tr>
+                                    <td class="red">{{ forloop.counter }}</td>
+                                    <td class="red">{{ item.created }}</td>
+                                    <td class="red">Expense</td>
+                                    <td class="red">{{ item.name }}</td>
+                                    <td class="red">{{ item.id }} </td>
+                                    <td class="red">-</td>
+                                    <td class="red"> {{ item.amount | money_format }}</td>
+                                </tr>
+                            {% elif item.customer.name %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.created }}</td>
+                                    <td>{{ item.customer }}</td>
+                                    <td> Sale with invoice {{ item.customer.name }}</td>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.amount_paid | money_format }}</td>
+                                    <td>{{ item.balance | money_format }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.created }}</td>
+                                    <td>{{ item.supplier }}</td>
+                                    <td>Purchase of {{ item.order.item.name }}</td>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.amount_paid | money_format }}</td>
+                                    <td>{{ item.received_price | money_format }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/static/datatables/jquery.dataTables.js"></script>
+    <script src="/static/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/static/scripts/sb-admin-datatables.min.js"></script>
+{% endblock %}

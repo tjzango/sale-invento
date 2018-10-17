@@ -60,3 +60,10 @@
 .c-state--danger {
     background-color: #d65b4a
 }
+.red {
+    color: red;
+}
+
+.gray {
+    color: grey;
+}

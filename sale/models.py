@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-
-from store.models import Item
-from customer.models import Customer
-
-
 # Create your models here.
 # Sale models defination
 from django.db import models
-from store.models import RequestOrder
+
+from customer.models import Customer
 from index.models import Account
+from store.models import Item
+from store.models import RequestOrder
 
 
 class Order(models.Model):
@@ -30,6 +28,13 @@ class Order(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+
+
+class DebtPayment(models.Model):
+    order = models.ForeignKey(Order, related_name='debt')
+    balance = models.IntegerField(default=0)
+    paid = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class OrderItem(models.Model):
@@ -52,3 +57,4 @@ class OrderItem(models.Model):
 class Expense(models.Model):
     name = models.CharField(max_length=100)
     amount = models.PositiveIntegerField(default=1)
+    created = models.DateTimeField(auto_now_add=True)

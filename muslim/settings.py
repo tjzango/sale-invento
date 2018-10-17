@@ -133,9 +133,9 @@ STATICFILES_DIRS = (
 )
 
 # Sets the login logout URL
-LOGIN_REDIRECT_URL = reverse_lazy('store:index')
+LOGIN_REDIRECT_URL = reverse_lazy('profile')
 LOGIN_URL = reverse_lazy('login')
-LOGOUT_REDIRECT_URL = reverse_lazy('login')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 # EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

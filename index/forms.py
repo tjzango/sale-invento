@@ -1,6 +1,13 @@
 # This file contain all the forms we use in our index application
 from django import forms
-from index.models import Employee, Account, Message
+
+from index.models import (
+    Employee,
+    Account,
+    Message,
+    CustomerRequestOrder,
+)
+
 
 # This is the form used in user rigistation it contain first & last name, email, password and another password
 class UserRegistrationForm(forms.Form):
@@ -26,7 +33,7 @@ class UserLoginForm(forms.Form):
 
 # Form field used for user profile form
 class UserProfileForm(forms.Form):
-    contact = forms.CharField(required=True,  widget=forms.TextInput(
+    contact = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'e.g 08012345678'}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'e.g Haroun'}))
@@ -68,15 +75,15 @@ class EmployeeForm(forms.ModelForm):
 
 class UserAddForm(forms.ModelForm):
     first_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': 'First Name e.g Musleem', 'class': 'form-control input' }))
+        attrs={'placeholder': 'First Name e.g Musleem', 'class': 'form-control input'}))
     username = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Username e.g Musleem', 'class': 'form-control input'}))
     last_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': 'Lastname e.g Exe John', 'class': 'form-control input' }))
+        attrs={'placeholder': 'Lastname e.g Exe John', 'class': 'form-control input'}))
     password = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': 'Strong Password', 'class': 'form-control input' }))
+        attrs={'placeholder': 'Strong Password', 'class': 'form-control input'}))
     password_ = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': 'Retype Password', 'class': 'form-control input' }))
+        attrs={'placeholder': 'Retype Password', 'class': 'form-control input'}))
 
     class Meta:
         model = Account
@@ -87,3 +94,14 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ('body', 'user')
+
+
+class CustomerRequestOrderForm(forms.ModelForm):
+    class Meta:
+        model = CustomerRequestOrder
+        fields = (
+            'name',
+            'key',
+            'products',
+            'collecting'
+        )

@@ -1,23 +1,79 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.contrib.auth.decorators import login_required
+
+from itertools import chain
+
 # from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import (
     render,
     get_object_or_404,
     redirect,
 )
-from index.models import Account, User, Employee, Message
+from django.utils.timezone import datetime
 
-from index.forms import UserProfileForm, EmployeeForm, UserAddForm, MessageForm
+from index.forms import (
+    CustomerRequestOrderForm,
+    CustomerRequestOrder,
+    UserProfileForm,
+    EmployeeForm,
+    UserAddForm,
+    MessageForm,
+)
+from index.models import Account, User, Employee, Message
+from sale.models import Order, Expense
+from store.models import RequestOrder
 
 
 # Create your views here.
+def index(request):
+    return render(request, 'index.html')
+
+
+def customer_request_order(request):
+    form = CustomerRequestOrderForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Order submitted')
+        return redirect('/')
+    context = {
+        'form': form
+    }
+    return render(request, 'customer_request_order.html', context)
+
+
+@login_required
+def customer_requests(request):
+    today = datetime.today()
+    context = {
+        'requests': CustomerRequestOrder.objects.all(),
+        'today_requests': CustomerRequestOrder.objects.filter(created__date=today.date()).count(),
+    }
+    return render(request, 'customer_request.html', context)
+
+
+@login_required
+def report(request):
+    today = datetime.today()
+    sales = Order.objects.filter(created__date=today.date())
+    orders = RequestOrder.objects.filter(created__date=today.date())
+    expenses = Expense.objects.filter(created__date=today.date())
+
+    report_list = sorted(
+        chain(sales, orders, expenses),
+        key=lambda instance: instance.created)
+    context = {
+        'transactions': report_list,
+    }
+    return render(request, 'report.html', context)
+
+
 @login_required
 def add_user(request):
     form = UserAddForm(request.POST or None)
     if form.is_valid():
+        user = User()
         account = form.save(commit=False)
         password = form.cleaned_data.get('password')
         password_ = form.cleaned_data.get('password_')
@@ -42,12 +98,11 @@ def add_user(request):
         if (account.employee.level == 'Cleaner') | (account.employee.level == 'Other'):
             messages.error(request, "This emplyee can't use the system\nCleaner or other")
             return redirect('/users/add')
-        user = User.objects.create(
-            first_name=form.cleaned_data.get('first_name'),
-            last_name=form.cleaned_data.get('last_name'),
-            username=username
-        )
-        user.set_password(form.cleaned_data.get('username'))
+        user.first_name = form.cleaned_data.get('first_name')
+        user.last_name = form.cleaned_data.get('last_name')
+        user.username = username
+        user.set_password(password)
+        user.save()
         account.user = user
         account.save()
         return redirect('/users/')
@@ -164,4 +219,3 @@ def message_tag(request, key):
     _message.visible = False
     _message.save()
     return redirect('/sale')
-

@@ -37,10 +37,48 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ debtor.customer.name }}</td>
                                 <td>{{ debtor.balance }}</td>
-                                <td>{{ debtor.id }}</td>
+                                <td>000{{ debtor.id }}</td>
                                 <td>
                                     <a href="{% url 'sale:debtors' debtor.id %}">
                                         <button class="btn btn-danger">Pay</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-profile">
+        <div class="clearfix">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <h3>Paid Debt</h3>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Balance</th>
+                            <th>Paid</th>
+                            <th>Invoice No</th>
+                            <th>Receipt</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for debtor in paid_debt %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ debtor.order.customer.name }}</td>
+                                <td>{{ debtor.order.balance }}</td>
+                                <td>{{ debtor.paid }}</td>
+                                <td>000{{ debtor.order.id }}</td>
+                                <td>
+                                    <a href="{% url 'sale:invoice' debtor.order.id %}" target="_blank">
+                                        <button class="btn btn-info">Print</button>
                                     </a>
                                 </td>
                             </tr>

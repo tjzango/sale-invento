@@ -1,0 +1,119 @@
+{% load widget_tweaks %}
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Account Details | Dashboard UI Kit</title>
+    <meta name="description" content="Dashboard UI Kit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,700" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/main.min.css%3Fv=2.0.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+<header class="c-navbar">
+    <a class="c-navbar__brand" href="ashing-logo">
+        <img src="/static/img/logo.png" alt="ashing-logo">
+    </a>
+
+    <!-- Navigation items that will be collapes and toggle in small viewports -->
+    <nav class="c-nav collapse" id="main-nav">
+        <ul class="c-nav__list">
+            <li class="c-nav__item">
+                <a class="c-nav__link" href="">Home</a>
+            </li>
+            <li class="c-nav__item">
+                <a class="c-nav__link" href="{% url 'customer_request_order' %}">Order Booking</a>
+            </li>
+            <li class="c-nav__item">
+                <a class="c-nav__link" href="{% url 'login' %}">Login</a>
+            </li>
+
+        </ul>
+    </nav>
+    <!-- // Navigation items  -->
+
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xl-3 u-hidden-down@wide">
+            <aside class="c-menu u-ml-medium">
+
+            </aside>
+        </div>
+
+        <div class="col-xl-6">
+            <h2 class="u-h3 u-mb-small">Booked an Order</h2>
+            <form method="post">{% csrf_token %}
+                <div class="c-card u-p-medium u-text-small u-mb-small">
+                    <h6 class="u-text-bold">Primary Info</h6>
+
+                    <dl class="u-flex u-pv-small u-border-bottom">
+                        <dt class="u-width-25">Name</dt>
+                        <dd class="input-group form-group-lg">
+                            {{ form.name | add_class:'form-control' | append_attr:'placeholder:Your name'}}
+                        </dd>
+                    </dl>
+
+                    <dl class="u-flex u-pv-small u-border-bottom">
+                        <dt class="u-width-25">When are you collecting</dt>
+                        <dd class="input-group form-group-lg text">
+                            {{ form.collecting |add_class:'form-control' | append_attr:'placeholder:Put date here' }}
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="c-card u-p-medium u-mb-small u-text-small">
+                    <h6 class="u-text-bold">Secondary Info</h6>
+
+                    <dl class="u-flex u-pt-small">
+                        <dt class="u-width-25">What are you looking for?</dt>
+                        <dd class=" u-width-75 input-group form-group-lg">
+                            {{ form.products |add_class:'form-control' | append_attr:'placeholder:Enter list the products you want...' }}</dd>
+                    </dl>
+                    <dl class="u-flex u-pt-small">
+                        <dt class="u-width-25">Your Secret Characters</dt>
+                        <dd class="u-width-75">{{ form.key |add_class:'form-control' | append_attr:'placeholder:Secret chars will allow us keep track of you...'}}</dd>
+                    </dl>
+                    <span><i style="color: red">Make sure you remember your secret key it will allow us keep track of your order</i></span><br/>
+                    <button type="submit" class="btn c-btn--success">Submit </button>
+                </div>
+            </form>
+            </main>
+        </div>
+
+        <div class="col-xl-3 u-mb-medium u-hidden-down@tablet">
+
+        </div>
+    </div>
+</div>
+
+<!-- Main javascsript -->
+<script src="/static/js/main.min.js%3Fv=2.0"></script>
+
+<script>
+    window.ga = function () {
+        ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-88739867-2', 'auto');
+    ga('send', 'pageview')
+</script>
+
+</body>
+</html>

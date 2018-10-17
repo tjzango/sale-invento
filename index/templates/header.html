@@ -11,13 +11,18 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="lnr lnr-alarm"></i>
-                        <span class="badge bg-danger">{{ messages_not.count }}</span>
+                        {% if not messages_not.count %}
+                        {% else %}
+                            <span class="badge bg-danger">
+                            {{ messages_not.count }}
+                        {% endif %}
+                        </span>
                     </a>
                     <ul class="dropdown-menu notifications">
-                        {% if not_message %}
+                        {% if messages_not %}
                             {% for message in messages_not %}
                                 <li><a href="{% url 'message_tag' message.id %}" class="notification-item"><span
-                                        class="dot bg-warning"></span>{{ message }}
+                                        class="dot bg-warning"></span>{{ message.body }}
                                 </a></li>
                             {% endfor %}
                         {% else %}
