@@ -3,14 +3,14 @@
 # importing from python library
 from __future__ import unicode_literals
 
+from django.contrib import messages
 # Importing from django package
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib import messages
 
+from customer.forms import AddCustomerForm
 # Importing forms amd database model
 from customer.models import Customer
-from customer.forms import AddCustomerForm
 from sale.models import OrderItem
 
 
@@ -58,6 +58,7 @@ def statement(request, key):
         'customer': customer_transaction
     }
     return render(request, 'statement.html', context)
+
 
 """
 def customer_detail(request, key):

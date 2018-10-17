@@ -1,6 +1,7 @@
 # The is the file responsible for url route in customer application
 # it will join with muslim/urls application
 from django.conf.urls import url
+
 # An import statement, It actually import the view that will be loaded if any url is requesteed
 from customer.views import (
     customer,
