@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import (
     render,
     redirect,
     get_object_or_404,
 )
-from django.contrib import messages
 
+from store.forms import AddItemForm
 from store.models import (
     Item,
     RequestOrder
 )
-from store.forms import AddItemForm
-from index.models import Account
 
 
 # Create your views here.

@@ -8,24 +8,24 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
                 <div class="panel-heading">
-            <h3 align='center' class="panel-title">Add Item</h3>
-        </div>
-        <div class="panel-body">
-            <form method="post">{% csrf_token %}
-                {{ form.name | add_class:'form-control' }}
-                <br>
-                {{ form.description | add_class:'form-control' | append_attr:'rows=3' }}
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon">₦</span>
-                    {{ form.price | add_class:'form-control' }}
+                    <h3 align='center' class="panel-title">Add Item</h3>
                 </div>
-                <br>
-                <div class="text-center">
-                    <button class="btn btn-primary">Add</button>
+                <div class="panel-body">
+                    <form method="post">{% csrf_token %}
+                        {{ form.name | add_class:'form-control' }}
+                        <br>
+                        {{ form.description | add_class:'form-control' | append_attr:'rows=3' }}
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">₦</span>
+                            {{ form.price | add_class:'form-control' }}
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/css/custome-style.css">
 {% endblock %}
 {% block content %}
-     <div class="row">
+    <div class="row">
         <div class="col-sm-7 col-lg-6">
             <div class="c-state">
                 <h4 class="c-state__number">{{ suppliers.count }}</h4>
@@ -60,7 +60,9 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ supplier.name }}</td>
                                 <td>{{ supplier.contact }}</td>
-                                <td><a href="{% url 'supplier:detail' supplier.id %}"><button class="btn btn-danger">View</button> </a></td>
+                                <td><a href="{% url 'supplier:detail' supplier.id %}">
+                                    <button class="btn btn-danger">View</button>
+                                </a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

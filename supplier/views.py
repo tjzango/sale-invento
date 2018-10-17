@@ -1,27 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import (
     render,
     redirect,
-    get_list_or_404,
     get_object_or_404,
 )
 
-
-from supplier.models import Supplier
-from supplier.forms import AddSupplierForm
-
-from store.models import (
-    RequestOrder,
-)
+from index.models import Account
 from store.forms import (
     RequestOrderForm,
     StockOrderForm
 )
-from index.models import Account
+from store.models import (
+    RequestOrder,
+)
+from supplier.forms import AddSupplierForm
+from supplier.models import Supplier
 
 
 # Create your views here.

@@ -8,7 +8,6 @@ from store.views import (
     add_item,
 )
 
-
 # this are the url patterns their name and vue there pointing to
 urlpatterns = [
     url(r'^$', store, name='index'),

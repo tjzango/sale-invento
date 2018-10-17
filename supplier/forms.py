@@ -1,10 +1,9 @@
 from django import forms
+
 from supplier.models import (
     Supplier,
 )
-from store.models import (
-    RequestOrder
-)
+
 
 # This is the form fiels used for addding new supplier
 class AddSupplierForm(forms.ModelForm):
@@ -19,4 +18,3 @@ class AddSupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
         fields = ('name', 'contact', 'address')
-

@@ -1,24 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.decorators import login_required
-from django.template.loader import get_template
+from cart.cart import Cart
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import (
     render,
     redirect,
-    HttpResponse,
     get_list_or_404,
     get_object_or_404
 )
+from django.template.loader import get_template
 
-
-from utility import render_to_pdf
 from index.models import Account
-from cart.cart import Cart
-from store.models import (
-    Item,
-    RequestOrder
+from sale.forms import (
+    DebtForm,
+    ExpenseForm,
+    QuantityForm,
+    OrderSaveForm,
 )
 from sale.models import (
     Order,
@@ -26,11 +25,9 @@ from sale.models import (
     OrderItem,
     DebtPayment,
 )
-from sale.forms import (
-    DebtForm,
-    ExpenseForm,
-    QuantityForm,
-    OrderSaveForm,
+from store.models import (
+    Item,
+    RequestOrder
 )
 
 

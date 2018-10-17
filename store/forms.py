@@ -39,7 +39,7 @@ class StockOrderForm(forms.ModelForm):
         attrs={'placeholder': 'Requested Quantity', 'class': 'form-control'}))
     received_price = forms.IntegerField(required=True, widget=forms.NumberInput(
         attrs={'placeholder': 'Price', 'class': 'form-control'}))
-    
+
     # Use RequestOrder Daatabase with the following fields
     class Meta:
         model = RequestOrder

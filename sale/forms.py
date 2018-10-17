@@ -1,6 +1,6 @@
 from django import forms
-from sale.models import Order, Expense
 
+from sale.models import Order, Expense
 
 PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(0, 1000)]
 
