@@ -64,7 +64,7 @@
                         <tbody>
                         {% for sale in sales %}
                             <tr>
-                                {% if sale.order.balance > 0%}
+                                {% if sale.order.balance > 0 %}
                                     <td class="red">{{ forloop.counter }}</td>
                                     <td class="red">000{{ sale.order.id }}</td>
                                     <td class="red">{{ sale.product }}</td>

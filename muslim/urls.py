@@ -16,7 +16,6 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-
 """
 There are urls to other applications patterns example 
   url(r'^', include('index.urls')) is a link to index/urls.py

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 
-{% block title %} Deptors{% endblock %}
+{% block title %} Debtors{% endblock %}
 {% block style %}
     <link rel="stylesheet" href="/static/vendor/datatables/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="/static/css/custome-style.css">
@@ -37,7 +37,8 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ debtor.customer.name }}</td>
                                 <td>{{ debtor.balance }}</td>
-                                <td>000{{ debtor.id }}</td>
+                                <td>000
+                                    {{ debtor.id }}</td>
                                 <td>
                                     <a href="{% url 'sale:debtors' debtor.id %}">
                                         <button class="btn btn-danger">Pay</button>
