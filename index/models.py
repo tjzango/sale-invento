@@ -2,8 +2,8 @@
 # This file contain all our model(databasse table) defination of the index application
 from __future__ import unicode_literals
 
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 # STATUS AND LEVELS Are choices wewant to use in Account and Employee table
 STATUS = (('Married', 'Married'),

@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404
+
 from index.models import Account, Message
-from django.shortcuts import get_object_or_404, get_list_or_404
 
 
 def user(request):
@@ -21,4 +22,3 @@ def message(request):
             return {'messages_not': {e}}
         return {'messages_not': msg}
     return {'messages_not': 'None'}
-
