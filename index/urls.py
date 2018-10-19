@@ -22,9 +22,12 @@ from index.views import (
     activate,
     add_user,
     deactivate,
+    report_week,
+    report_month,
     add_employee,
     send_message,
     message_tag,
+    report_all_time,
     manage_employees,
     customer_requests,
     customer_request_order,
@@ -44,6 +47,10 @@ urlpatterns = [
 
     url(r'^message/$', message, name='message'),
     url(r'report/$', report, name='report'),
+
+    url(r'report/week/$', report_week, name='report_week'),
+    url(r'report/all/$', report_all_time, name='report_all_time'),
+    url(r'report/month/$', report_month, name='report_month'),
     url(r'^__tag/(?P<key>[0-9]+)/$', message_tag, name='message_tag'),
     url(r'^message/send/$', send_message, name='send_message'),
 

@@ -8,30 +8,38 @@
     <link rel="stylesheet" href="/static/css/custome-style.css">
 {% endblock %}
 {% block content %}
-    {% comment %}
+
     <div class="row">
-        <div class="col-sm-7 col-lg-4">
+        <div class="col-sm-7 col-lg-3">
             <div class="c-state">
-                <h4 class="c-state__number">{{ transactions.count }}</h4>
-                <p style="font-size: 20px" class="c-state__status">Total transactions(Today)</p>
+                <h4 class="c-state__number"><a style="color:#fff;" href="{% url 'report' %}">Today</a> </h4>
+
                 <span class="c-state__indicator">
                     <i class="fa fa-arrow-circle-o-down"></i>
                 </span>
             </div><!-- // c-state -->
         </div>
-        <div class="col-sm-7 col-lg-4">
+        <div class="col-sm-7 col-lg-3">
             <div class="c-state c-state--success">
-                <h4 class="c-state__number">{{ users_emp }}</h4>
-                <p style="font-size: 20px" class="c-state__status">transactionss (User)</p>
+                <h4 class="c-state__number"><a style="color:#fff;" href="{% url 'report_week' %}">This week</a></h4>
+
                 <span class="c-state__indicator">
                             <i class="fa fa-arrow-circle-o-up"></i>
                         </span>
             </div><!-- // c-state -->
         </div>
-        <div class="col-sm-7 col-lg-4">
+        <div class="col-sm-7 col-lg-3">
+            <div class="c-state c-state--danger">
+                <h4 class="c-state__number"><a style="color:#fff;" href="{% url 'report_month' %}">This Month</a></h4>
+                <span class="c-state__indicator">
+                            <i class="fa fa-arrow-circle-o-down"></i>
+                        </span>
+            </div><!-- // c-state -->
+        </div>
+        <div class="col-sm-7 col-lg-3">
             <div class="c-state c-state--warning">
-                <h4 class="c-state__number">{{ non_users_emp }}</h4>
-                <p style="font-size: 20px" class="c-state__status">transactions (non Users)</p>
+                <h4 class="c-state__number"><a style="color:#fff;" href="{% url 'report_all_time' %}">All Time</a></h4>
+
                 <span class="c-state__indicator">
                             <i class="fa fa-arrow-circle-o-down"></i>
                         </span>
@@ -39,7 +47,7 @@
         </div>
 
     </div>
-    {% endcomment %}
+
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">

@@ -70,6 +70,60 @@ def report(request):
 
 
 @login_required
+def report_week(request):
+    import datetime
+    end_date = datetime.datetime.today()
+    start_date = end_date - datetime.timedelta(days=7)
+    sales = Order.objects.filter(created__range=(start_date, end_date))
+    # sales = Order.objects.filter(created__datoday=month)
+    orders = RequestOrder.objects.filter(created__range=(start_date, end_date))
+    expenses = Expense.objects.filter(created__range=(start_date, end_date))
+
+    report_list = sorted(
+        chain(sales, orders, expenses),
+        key=lambda instance: instance.created)
+    context = {
+        'transactions': report_list,
+    }
+    return render(request, 'report.html', context)
+
+
+@login_required
+def report_month(request):
+    import datetime
+    end_date = datetime.datetime.today()
+    start_date = end_date - datetime.timedelta(days=30)
+    print ('Haruna {} and '.format(end_date))
+    sales = Order.objects.filter(created__range=(start_date, end_date))
+    # sales = Order.objects.filter(created__datoday=month)
+    orders = RequestOrder.objects.filter(created__range=(start_date, end_date))
+    expenses = Expense.objects.filter(created__range=(start_date, end_date))
+
+    report_list = sorted(
+        chain(sales, orders, expenses),
+        key=lambda instance: instance.created)
+    context = {
+        'transactions': report_list,
+    }
+    return render(request, 'report.html', context)
+
+
+@login_required
+def report_all_time(request):
+    sales = Order.objects.all()
+    # sales = Order.objects.filter(created__datoday=month)
+    orders = RequestOrder.objects.all()
+    expenses = Expense.objects.all()
+
+    report_list = sorted(
+        chain(sales, orders, expenses),
+        key=lambda instance: instance.created)
+    context = {
+        'transactions': report_list,
+    }
+    return render(request, 'report.html', context)
+
+@login_required
 def add_user(request):
     form = UserAddForm(request.POST or None)
     if form.is_valid():
