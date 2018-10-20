@@ -44,6 +44,9 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     with_some = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ('-id',)
+
     def __str__(self):
         return '{}'.format(self.id)
 
@@ -58,3 +61,6 @@ class Expense(models.Model):
     name = models.CharField(max_length=100)
     amount = models.PositiveIntegerField(default=1)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created',)
