@@ -6,12 +6,16 @@ from itertools import chain
 # from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
 from django.shortcuts import (
     render,
     get_object_or_404,
     redirect,
 )
+from django.template.loader import render_to_string
 from django.utils.timezone import datetime
+from weasyprint import HTML
 
 from index.forms import (
     CustomerRequestOrderForm,
@@ -65,8 +69,71 @@ def report(request):
         key=lambda instance: instance.created)
     context = {
         'transactions': report_list,
+        'report_type': 'daily',
     }
     return render(request, 'report.html', context)
+
+
+@login_required
+def report_print(request, report_name):
+    import datetime
+    end_date = datetime.datetime.today()
+    if report_name == 'week':
+        start_date = end_date - datetime.timedelta(days=7)
+        sales = Order.objects.filter(created__range=(start_date, end_date))
+        orders = RequestOrder.objects.filter(created__range=(start_date, end_date))
+        expenses = Expense.objects.filter(created__range=(start_date, end_date))
+        report_list = sorted(
+            chain(sales, orders, expenses),
+            key=lambda instance: instance.created)
+        html_string = render_to_string('report_print.html', {'transactions': report_list})
+
+        html = HTML(string=html_string)
+        html.write_pdf(target='/tmp/weekly_report.pdf')
+    elif report_name == 'month':
+        import datetime
+        end_date = datetime.datetime.today()
+        start_date = end_date - datetime.timedelta(days=7)
+        sales = Order.objects.filter(created__range=(start_date, end_date))
+        orders = RequestOrder.objects.filter(created__range=(start_date, end_date))
+        expenses = Expense.objects.filter(created__range=(start_date, end_date))
+        report_list = sorted(
+            chain(sales, orders, expenses),
+            key=lambda instance: instance.created)
+        html_string = render_to_string('report_print.html', {'transactions': report_list})
+
+        html = HTML(string=html_string)
+        html.write_pdf(target='/tmp/monthly_report.pdf')
+    elif report_name == 'all':
+        sales = Order.objects.all()
+        orders = RequestOrder.objects.all()
+        expenses = Expense.objects.all()
+
+        report_list = sorted(
+            chain(sales, orders, expenses),
+            key=lambda instance: instance.created)
+        html_string = render_to_string('report_print.html', {'transactions': report_list})
+
+        html = HTML(string=html_string)
+        html.write_pdf(target='/tmp/all_time_report.pdf')
+    else:
+        sales = Order.objects.filter(created__date=end_date)
+        orders = RequestOrder.objects.filter(created__date=end_date)
+        expenses = Expense.objects.filter(created__date=end_date)
+
+        report_list = sorted(
+            chain(sales, orders, expenses),
+            key=lambda instance: instance.created)
+        html_string = render_to_string('report_print.html', {'transactions': report_list})
+
+        html = HTML(string=html_string)
+        html.write_pdf(target='/tmp/todays_report.pdf')
+
+    fs = FileSystemStorage('/tmp')
+    with fs.open('mypdf.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="{}_report.pdf"'.format(report_name)
+        return response
 
 
 @login_required
@@ -84,6 +151,7 @@ def report_week(request):
         key=lambda instance: instance.created)
     context = {
         'transactions': report_list,
+        'report_type': 'weekly',
     }
     return render(request, 'report.html', context)
 
@@ -104,6 +172,7 @@ def report_month(request):
         key=lambda instance: instance.created)
     context = {
         'transactions': report_list,
+        'report_type': 'monthly',
     }
     return render(request, 'report.html', context)
 
@@ -122,6 +191,7 @@ def report_all_time(request):
         'transactions': report_list,
     }
     return render(request, 'report.html', context)
+
 
 @login_required
 def add_user(request):
@@ -183,10 +253,11 @@ def profile(request):
             account.save()
             account.user.save()
             messages.success(request, "Updated basic information")
-        except Exception as error:
-            e = {'message': error}
-
+        except Exception:
+            # e = {'message': error}
+            pass
             return redirect('/account')
+
     context = {'form': form}
     return render(request, 'profile.html', context)
 

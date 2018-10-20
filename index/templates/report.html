@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-7 col-lg-3">
             <div class="c-state">
-                <h4 class="c-state__number"><a style="color:#fff;" href="{% url 'report' %}">Today</a> </h4>
+                <h4 class="c-state__number"><a style="color:#fff;" href="{% url 'report' %}">Today</a></h4>
 
                 <span class="c-state__indicator">
                     <i class="fa fa-arrow-circle-o-down"></i>
@@ -51,6 +51,23 @@
     <div class="panel panel-profile">
         <div class="clearfix">
             <div class="col-sm-12">
+                {% if report_type == 'daily' %}
+                    <a href="{% url 'report_' 'day' %}">
+                        <button class="c-btn c-btn--danger btn-lg">Print Report</button>
+                    </a>
+                {% elif report_type == 'weekly' %}
+                    <a href="{% url 'report_' 'week' %}">
+                        <button class="c-btn c-btn--danger btn-lg">Print Report</button>
+                    </a>
+                {% elif report_type == 'monthly' %}
+                    <a href="{% url 'report_' 'month' %}">
+                        <button class="c-btn c-btn--danger btn-lg">Print Report</button>
+                    </a>
+                {% else %}
+                    <a href="{% url 'report_' 'all' %}">
+                        <button class="c-btn c-btn--danger btn-lg">Print Report</button>
+                    </a>
+                {% endif %}
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
