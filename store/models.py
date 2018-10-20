@@ -49,4 +49,7 @@ class RequestOrder(models.Model):
         return '{}, {}'.format(self.item, self.supplier)
 
     class Meta:
-        ordering = ['remaining_quantity']
+        ordering = ('-created',)
+
+    # class Meta:
+    #     ordering = ['remaining_quantity']
