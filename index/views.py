@@ -78,6 +78,7 @@ def report(request):
 def report_print(request, report_name):
     import datetime
     end_date = datetime.datetime.today()
+    target = '/tmp/%s.pdf' % report_name
     if report_name == 'week':
         start_date = end_date - datetime.timedelta(days=7)
         sales = Order.objects.filter(created__range=(start_date, end_date))
@@ -86,10 +87,11 @@ def report_print(request, report_name):
         report_list = sorted(
             chain(sales, orders, expenses),
             key=lambda instance: instance.created)
+        # printing template
         html_string = render_to_string('report_print.html', {'transactions': report_list})
 
         html = HTML(string=html_string)
-        html.write_pdf(target='/tmp/weekly_report.pdf')
+        html.write_pdf(target=target)
     elif report_name == 'month':
         import datetime
         end_date = datetime.datetime.today()
@@ -103,7 +105,7 @@ def report_print(request, report_name):
         html_string = render_to_string('report_print.html', {'transactions': report_list})
 
         html = HTML(string=html_string)
-        html.write_pdf(target='/tmp/monthly_report.pdf')
+        html.write_pdf(target=target)
     elif report_name == 'all':
         sales = Order.objects.all()
         orders = RequestOrder.objects.all()
@@ -115,7 +117,7 @@ def report_print(request, report_name):
         html_string = render_to_string('report_print.html', {'transactions': report_list})
 
         html = HTML(string=html_string)
-        html.write_pdf(target='/tmp/all_time_report.pdf')
+        html.write_pdf(target=target)
     else:
         sales = Order.objects.filter(created__date=end_date)
         orders = RequestOrder.objects.filter(created__date=end_date)
@@ -127,12 +129,13 @@ def report_print(request, report_name):
         html_string = render_to_string('report_print.html', {'transactions': report_list})
 
         html = HTML(string=html_string)
-        html.write_pdf(target='/tmp/todays_report.pdf')
+        html.write_pdf(target=target)
 
     fs = FileSystemStorage('/tmp')
-    with fs.open('mypdf.pdf') as pdf:
+    file_name = '{}.pdf'.format(report_name)
+    with fs.open(file_name) as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="{}_report.pdf"'.format(report_name)
+        response['Content-Disposition'] = 'attachment; filename="{}.pdf"'.format(report_name)
         return response
 
 

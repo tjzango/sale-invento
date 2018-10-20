@@ -94,6 +94,7 @@
                                     <td class="red">-</td>
                                     <td class="red"> {{ item.amount | money_format }}</td>
                                 </tr>
+
                             {% elif item.customer.name %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
@@ -105,15 +106,17 @@
                                     <td>{{ item.balance | money_format }}</td>
                                 </tr>
                             {% else %}
+                                {% if item.stocked %}
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>{{ item.created }}</td>
-                                    <td>{{ item.supplier }}</td>
-                                    <td>Purchase of {{ item.order.item.name }}</td>
-                                    <td>{{ item.id }}</td>
-                                    <td>{{ item.amount_paid | money_format }}</td>
-                                    <td>{{ item.received_price | money_format }}</td>
+                                    <td class="red">{{ forloop.counter }}</td>
+                                    <td class="red">{{ item.created }}</td>
+                                    <td class="red">{{ item.supplier }}</td>
+                                    <td class="red">Purchase of {{ item.item }}</td>
+                                    <td class="red">000{{ item.id }}</td>
+                                    <td class="red">-</td>
+                                    <td class="red">{{ item.received_price | money_format }}</td>
                                 </tr>
+                                    {% endif %}
                             {% endif %}
                         {% endfor %}
                         </tbody>

@@ -1,0 +1,66 @@
+{% load supplier_modifier %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+</head>
+<body>
+<h2 align="center">Asing and Brother's Nigeria LTD</h2>
+<h3 align="center">Reports</h3>
+<table border="3">
+    <thead>
+    <tr>
+        <th>S/N</th>
+        <th>Date/Time</th>
+        <th>Customer/Supplier</th>
+        <th>Purpose</th>
+        <th>Invoice Id</th>
+        <th>Credit</th>
+        <th>Debit</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in transactions %}
+        {% if item.name %}
+            <tr>
+                <td class="red">{{ forloop.counter }}</td>
+                <td class="red">{{ item.created }}</td>
+                <td class="red">Expense</td>
+                <td class="red">{{ item.name }}</td>
+                <td class="red">000{{ item.id }} </td>
+                <td class="red">-</td>
+                <td class="red"> {{ item.amount | money_format }}</td>
+            </tr>
+        {% elif item.customer.name %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.created }}</td>
+                <td>{{ item.customer }}</td>
+                <td> Sales</td>
+                <td>000{{ item.id }}</td>
+                <td>{{ item.amount_paid | money_format }}</td>
+                <td>{{ item.balance | money_format }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.created }}</td>
+                <td>{{ item.supplier }}</td>
+                <td>Purchase of {{ item.supplier }}</td>
+                <td>000{{ item.id }}</td>
+                <td>{{ item.amount_paid | money_format }}</td>
+                <td>{{ item.received_price | money_format }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">&copy; 2018 <a href="https://www.themeineed.com" target="_blank">Muslim Habibu
+            Inuwa</a>. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
