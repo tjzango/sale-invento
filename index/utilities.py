@@ -4,6 +4,9 @@ from index.models import Account, Message
 
 
 def user(request):
+
+
+
     if request.user.is_authenticated:
         try:
             user = get_object_or_404(Account, user=request.user)

@@ -18,8 +18,8 @@
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
     <!-- ICONS -->
-    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/logo.jpg">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/logo.jpg">
 </head>
 
 <body>
@@ -30,27 +30,13 @@
             <div class="auth-box lockscreen clearfix">
                 <div class="content">
                     <div class="logo text-center">
-                        <h3><a href="{% url 'index' %}">Ashing & Brothers</a></h3>
+
+                            <h3><a href="{% url 'index' %}">ASHIG & BROTHERS</a></h3>
                         <h4>Nigeria LTD</h4>
                     </div>
-                    <h4 class="text-center" style="color: cadetblue">Login (Ashing Users)</h4>
+                    <h4 class="text-center" style="color: cadetblue">LOGIN (ASHIG USERS)</h4>
                     <form class="form-auth-small" method="post">{% csrf_token %}
-                        <div class="alert alert-{% if message.tags == 'success' %}success{% endif %} alert-block">
-                            {% if form.errors %}
-                                {% for field in form %}
-                                    {% for error in field.errors %}
-                                        <div class="alert alert-warning">
-                                            <strong>{{ error|escape }}</strong>
-                                        </div>
-                                    {% endfor %}
-                                {% endfor %}
-                                {% for error in form.non_field_errors %}
-                                    <div class="alert alert-danger">
-                                        <strong>{{ error|escape }}</strong>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
+
                         <div class="input-group form-group-lg">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             {{ form.username |add_class:'form-control' | append_attr:'placeholder:username' }}
@@ -67,10 +53,7 @@
                                 <i class="fa fa-lock"></i>
                                 <a href="{% url 'password_reset' %}">Forgot password?</a>
                             </span><br/>
-                            <span class="helper-text">
-                                <i class="fa fa-asterisk"></i>
-                                If you wan to book an order go to <a href="{% url 'customer_request_order' %}">book order</a> Page
-                            </span>
+
                         </div>
                     </form>
                 </div>

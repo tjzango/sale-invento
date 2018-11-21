@@ -23,19 +23,17 @@
                             {% endif %}
                             {% csrf_token %}
 
-                            <ul class="list-unstyled list-justify">{{ e }}
+                            <ul class="list-unstyled list-justify">{{ e }}{{ form.errors }}
                                 Customer:
                                 <li>
                                     {{ form.customer | add_class:'form-control input' }}
                                 </li>
                                 <li>
-                                    Cash Paid:
-                                    {{ form.cash_paid | add_class:'form-control' }}
+                                    Amount Paid:
+                                    <input type='text' class="form-control" value={{ cart.summary | money_format}} readonly />
+
                                 </li>
-                                <li>
-                                    Bank Paid:
-                                    {{ form.bank_paid | add_class:'form-control' }}
-                                </li>
+
                                 <li><br/>
                                     <div class="text-center">
                                         <button class="btn btn-primary">Sell</button>

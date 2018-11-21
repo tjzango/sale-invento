@@ -107,16 +107,16 @@
                                 </tr>
                             {% else %}
                                 {% if item.stocked %}
-                                <tr>
-                                    <td class="red">{{ forloop.counter }}</td>
-                                    <td class="red">{{ item.created }}</td>
-                                    <td class="red">{{ item.supplier }}</td>
-                                    <td class="red">Purchase of {{ item.item }}</td>
-                                    <td class="red">000{{ item.id }}</td>
-                                    <td class="red">-</td>
-                                    <td class="red">{{ item.received_price | money_format }}</td>
-                                </tr>
-                                    {% endif %}
+                                    <tr>
+                                        <td class="red">{{ forloop.counter }}</td>
+                                        <td class="red">{{ item.created }}</td>
+                                        <td class="red">{{ item.supplier }}</td>
+                                        <td class="red">Purchase of {{ item.item }}</td>
+                                        <td class="red">000{{ item.id }}</td>
+                                        <td class="red">-</td>
+                                        <td class="red">{{ item.received_price | money_format }}</td>
+                                    </tr>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                         </tbody>

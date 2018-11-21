@@ -6,7 +6,7 @@ from customer.models import Customer
 # This is the form fiels used for addding new customer
 class AddCustomerForm(forms.ModelForm):
     name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': 'e.g Haruna Tijjani', 'class': 'form-control'}))
+        attrs={'placeholder': 'e.g musleem habeeb', 'class': 'form-control'}))
     contact = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'e.g +2349038337462', 'class': 'form-control'}))
 

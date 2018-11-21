@@ -11,7 +11,7 @@ from django.shortcuts import (
     get_object_or_404
 )
 from django.template.loader import get_template
-
+from django.core.urlresolvers import reverse_lazy
 from index.models import Account
 from sale.forms import (
     DebtForm,
@@ -39,9 +39,12 @@ def index(request):
     :param request:
     :return:
     """
-    sales = OrderItem.objects.all()
-    order = Order.objects.all()
-    total_amount_made = sum(item.amount_paid for item in order)
+    sales = OrderItem.objects.filter(visible=True)
+    order = Order.objects.filter(visible=True)
+    expenses = Expense.objects.all()
+    total_expenses = sum(item.amount for item in expenses)
+    total_sale = sum(item.amount_paid for item in order)
+    total_amount_made = total_sale - total_expenses
     context = {
         'sales': sales,
         'total': sales.count(),
@@ -49,8 +52,8 @@ def index(request):
     }
     return render(request, 'sale.html', context)
 
-
 @login_required
+
 def new_sale(request):
     """
     This view is responsible for allowing users making new sale
@@ -61,20 +64,22 @@ def new_sale(request):
     order_form = OrderSaveForm(request.POST or None)
     if order_form.is_valid():
         order = order_form.save(commit=False)
-        cash = order_form.cleaned_data.get('cash_paid')
-        bank = order_form.cleaned_data.get('bank_paid')
-        order.amount_paid = int(cash) + int(bank)
-        order.balance = int(cart.summary()) - int(order.amount_paid)
+        order.amount_paid = int(cart.summary())
+        order.balance = 0
         order.attained_by = Account.objects.get(user=request.user)
         order.save()
+
         for item in cart:
             try:
                 remain_item = RequestOrder.objects.filter(item=item.product)
                 for i in remain_item:
+
+                    print(5)
                     if i.remaining_quantity <= int(item.quantity):
                         i.remaining_quantity = 0
                         i.save()
                     else:
+                        print(6)
                         i.remaining_quantity = int(i.remaining_quantity) - int(item.quantity)
                         i.save()
 
@@ -89,13 +94,15 @@ def new_sale(request):
             )
             cart.clear()
 
-        messages.success(request, 'Sale Completed >- Print Receipt')
-        return redirect('/sale/')
+        messages.error(request, 'Transaction with {} have been made.'.format(order.customer))
+        return redirect('sale:index')
+
     context = {
         'form': OrderSaveForm,
         'items': Item.objects.all(),
         'cart': Cart(request),
-        'quantity': QuantityForm()
+        'quantity': QuantityForm(),
+
     }
     return render(request, 'new_sale.html', context=context)
 
@@ -218,7 +225,10 @@ def debtors_info(request, key):
 def expense(request):
     form = ExpenseForm(request.POST or None)
     if form.is_valid():
+        amount = form.cleaned_data.get('amount')
+
         form.save()
+
         return redirect('/sale/expense/')
     context = {
         'form': form,
@@ -237,3 +247,30 @@ def invoice(request, key):
         'debt': DebtPayment.objects.filter(order=order)
     }
     return render(request, 'invoicee.html', context)
+
+
+@login_required
+def edit(request, key):
+    order = get_object_or_404(Order, id=key, visible=True)
+    context = {
+        'order': order,
+        'order_item_set': get_list_or_404(OrderItem, order=order),
+    }
+    return render(request, 'edit.html', context)
+
+
+@login_required
+def remove(request, key):
+    order = get_object_or_404(Order, id=key)
+    order.visible = False
+    items = OrderItem.objects.filter(order=order)
+    for i in items:
+        i.visible = False
+        i.save()
+
+    order.save()
+    context = {
+        'order': order,
+        'order_item_set': get_list_or_404(OrderItem, order=order),
+    }
+    return redirect('sale:index')

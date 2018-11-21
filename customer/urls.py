@@ -1,4 +1,6 @@
+
 # The is the file responsible for url route in customer application
+
 # it will join with muslim/urls application
 from django.conf.urls import url
 
@@ -13,5 +15,5 @@ from customer.views import (
 urlpatterns = [
     url(r'^$', customer, name='index'),
     url(r'^add/$', customer_add, name='add'),
-    url(r'^statement/(?P<key>[1-9]+)/$', statement, name='statement')
+    url(r'^statement/(?P<key>[0-9]+)/$', statement, name='statement')
 ]

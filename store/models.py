@@ -42,7 +42,7 @@ class RequestOrder(models.Model):
     received_price = models.PositiveIntegerField(default=0)
     stocked = models.BooleanField(default=False)
     action = models.CharField(choices=ACTIONS, max_length=20)
-    remaining_quantity = models.PositiveIntegerField(default=0)
+    remaining_quantity = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

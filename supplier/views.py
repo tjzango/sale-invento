@@ -47,7 +47,7 @@ def supplier_add(request):
 @login_required
 def order(request):
     context = {
-        'orders': RequestOrder.objects.filter(action='receive'),
+        'orders': RequestOrder.objects.all(),
         'completed': RequestOrder.objects.filter(stocked=True).count(),
         'in_completed': RequestOrder.objects.filter(stocked=False).count()
     }
@@ -62,6 +62,9 @@ def order_request(request):
             user = get_object_or_404(Account, user=request.user)
             instance = form.save(commit=False)
             instance.requested_by = user
+            action = form.cleaned_data.get('action')
+            if action == 'return':
+                instance.remaining_quantity = 0 - int(form.cleaned_data.get('requested_quantity'))
             instance.save()
             print(instance)
             messages.success(request, "Requested {}".format(form.cleaned_data.get('item')))

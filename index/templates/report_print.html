@@ -6,8 +6,10 @@
     <title>Reports</title>
 </head>
 <body>
-<h2 align="center">Asing and Brother's Nigeria LTD</h2>
-<h3 align="center">Reports</h3>
+<h2 align="center">ASHING AND BROTHERS  NIGERIA  LTD</h2>
+<h3 align="center">REPORTS</h3>
+<h4><b>TOTAL CREDIT: </b>{{ total_credit | money_format }}</h4>
+<h4><b>TOTAL DEBIT: </b>{{ total_debit | money_format }}</h4>
 <table border="3">
     <thead>
     <tr>
@@ -54,6 +56,9 @@
             </tr>
         {% endif %}
     {% endfor %}
+
+
+
     </tbody>
 </table>
 <footer>

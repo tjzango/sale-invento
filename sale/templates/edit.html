@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load supplier_modifier %}
+
+{% block title %} Edit{% endblock %}
+{% block content %}
+    <div class="panel panel-profile" xmlns="http://www.w3.org/1999/html">
+        <div class="clearfix">
+            <div class="profile-detail">
+                <div class="profile-info">
+                    <h4 class="heading">Edit Invoice</h4>
+                    <div class="col-sm-12">
+
+                        <ul class="list-unstyled list-justify">
+                            <li>
+                                <b>Customer: </b> {{ order.customer }}&nbsp;&nbsp;&nbsp;
+                                <b>Invoice: </b> 000{{ order.id }} &nbsp;&nbsp;&nbsp; </b>
+                                <b>Amount Paid</b> {{ order.amount_paid | money_format }}
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                    {% for item in order_item_set %}
+                                        <tr>
+                                            <td>{{ item.product.name }}</td>
+                                            <td>{{ item.quantity }} </td>
+                                            <td><a href="{% url 'sale:remove_item' item.product.id %}">Remove</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

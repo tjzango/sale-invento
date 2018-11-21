@@ -60,6 +60,7 @@
                             <th>S/N</th>
                             <th>Item</th>
                             <th>Supplier</th>
+                            <th>Date</th>
                             <th>Bill No</th>
                             <th>Requested By</th>
                             <th>Price</th>
@@ -69,18 +70,34 @@
                         </thead>
                         <tbody>
                         {% for order in orders %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ order.item }}</td>
-                                <td>{{ order.supplier }}</td>
-                                <td>{{ order.bill_no }}</td>
-                                <td>{{ order.requested_by }}</td>
-                                <td>{{ order.requested_price }}</td>
-                                <td>{{ order.requested_quantity }}</td>
-                                <td><a href="{% url 'supplier:order_stock' order.id %}">{% if order.stocked %}
-                                    Completed{% else %}Stock{% endif %}</a>
-                                </td>
-                            </tr>
+                            {% if order.action == 'receive' %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ order.item }}</td>
+                                    <td>{{ order.supplier }}</td>
+                                    <td>{{ order.created }}</td>
+                                    <td>{{ order.bill_no }}</td>
+                                    <td>{{ order.requested_by }}</td>
+                                    <td>{{ order.requested_price }}</td>
+                                    <td>{{ order.requested_quantity }}</td>
+                                    <td><a href="{% url 'supplier:order_stock' order.id %}">{% if order.stocked %}
+                                        Completed{% else %}Stock{% endif %}</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ order.item }}</td>
+                                    <td>{{ order.supplier }}</td>
+                                    <td>{{ order.created }}</td>
+                                    <td>{{ order.bill_no }}</td>
+                                    <td>{{ order.requested_by }}</td>
+                                    <td>{{ order.requested_price }}</td>
+                                    <td>{{ order.requested_quantity }}</td>
+                                    <td>Returned Order</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>

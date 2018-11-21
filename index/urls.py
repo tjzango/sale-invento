@@ -12,7 +12,6 @@ from django.contrib.auth.views import (
     password_reset_confirm,
     password_reset_complete,
 )
-
 from index.views import (
     users,
     index,

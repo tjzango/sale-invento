@@ -35,27 +35,6 @@ def index(request):
     return render(request, 'index.html')
 
 
-def customer_request_order(request):
-    form = CustomerRequestOrderForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Order submitted')
-        return redirect('/')
-    context = {
-        'form': form
-    }
-    return render(request, 'customer_request_order.html', context)
-
-
-@login_required
-def customer_requests(request):
-    today = datetime.today()
-    context = {
-        'requests': CustomerRequestOrder.objects.all(),
-        'today_requests': CustomerRequestOrder.objects.filter(created__date=today.date()).count(),
-    }
-    return render(request, 'customer_request.html', context)
-
 
 @login_required
 def report(request):
@@ -88,7 +67,14 @@ def report_print(request, report_name):
             chain(sales, orders, expenses),
             key=lambda instance: instance.created)
         # printing template
-        html_string = render_to_string('report_print.html', {'transactions': report_list})
+        html_string = render_to_string(
+            'report_print.html',
+            {
+                'transactions': report_list,
+                'total_credit': sum(item.amount_paid for item in sales),
+                'total_debit': sum(item.amount for item in expenses) + sum(item.requested_price for item in orders)
+            }
+        )
 
         html = HTML(string=html_string)
         html.write_pdf(target=target)
@@ -102,7 +88,14 @@ def report_print(request, report_name):
         report_list = sorted(
             chain(sales, orders, expenses),
             key=lambda instance: instance.created)
-        html_string = render_to_string('report_print.html', {'transactions': report_list})
+        html_string = render_to_string(
+            'report_print.html',
+            {
+                'transactions': report_list,
+                'total_credit': sum(item.amount_paid for item in sales),
+                'total_debit': sum(item.amount for item in expenses) + sum(item.requested_price for item in orders)
+            }
+        )
 
         html = HTML(string=html_string)
         html.write_pdf(target=target)
@@ -114,7 +107,14 @@ def report_print(request, report_name):
         report_list = sorted(
             chain(sales, orders, expenses),
             key=lambda instance: instance.created)
-        html_string = render_to_string('report_print.html', {'transactions': report_list})
+        html_string = render_to_string(
+            'report_print.html',
+            {
+                'transactions': report_list,
+                'total_credit': sum(item.amount_paid for item in sales),
+                'total_debit': sum(item.amount for item in expenses) + sum(item.requested_price for item in orders)
+            }
+        )
 
         html = HTML(string=html_string)
         html.write_pdf(target=target)
@@ -126,7 +126,14 @@ def report_print(request, report_name):
         report_list = sorted(
             chain(sales, orders, expenses),
             key=lambda instance: instance.created)
-        html_string = render_to_string('report_print.html', {'transactions': report_list})
+        html_string = render_to_string(
+            'report_print.html',
+            {
+                'transactions': report_list,
+                'total_credit': sum(item.amount_paid for item in sales),
+                'total_debit': sum(item.amount for item in expenses) + sum(item.requested_price for item in orders)
+            }
+        )
 
         html = HTML(string=html_string)
         html.write_pdf(target=target)
@@ -347,3 +354,26 @@ def message_tag(request, key):
     _message.visible = False
     _message.save()
     return redirect('/sale')
+
+
+
+def customer_request_order(request):
+    form = CustomerRequestOrderForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Order submitted')
+        return redirect('/')
+    context = {
+        'form': form
+    }
+    return render(request, 'customer_request_order.html', context)
+
+
+@login_required
+def customer_requests(request):
+    today = datetime.today()
+    context = {
+        'requests': CustomerRequestOrder.objects.all(),
+        'today_requests': CustomerRequestOrder.objects.filter(created__date=today.date()).count(),
+    }
+    return render(request, 'customer_request.html', context)

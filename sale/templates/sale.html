@@ -10,7 +10,7 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-7 col-lg-6">
-            <div class="c-state">
+            <div class="c-state c-state--warning">
                 <h4 class="c-state__number">{{ total }}</h4>
                 <p style="font-size: 20px" class="c-state__status">Total Sales</p>
                 <span class="c-state__indicator">
@@ -50,51 +50,40 @@
                         <thead>
                         <tr>
                             <th>S/N</th>
-                            <th>I/D</th>
+                            <th>Invoice No</th>
                             <th>Item</th>
                             <th>Customer</th>
+                            <th>Date</th>
                             <th>Attained By</th>
                             <th>Unit Price</th>
                             <th>Amount Paid</th>
-                            <th>Balance</th>
                             <th>Quantity</th>
                             <th>Reciept</th>
+                            <th>Remove</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for sale in sales %}
                             <tr>
-                                {% if sale.order.balance > 0 %}
-                                    <td class="red">{{ forloop.counter }}</td>
-                                    <td class="red">000{{ sale.order.id }}</td>
-                                    <td class="red">{{ sale.product }}</td>
-                                    <td class="red">{{ sale.order.customer.name }}</td>
-                                    <td class="red">{{ sale.order.attained_by }}</td>
-                                    <td class="red">{{ sale.price }}</td>
-                                    <td class="red">{{ sale.order.amount_paid | money_format }}</td>
-                                    <td class="red">{{ sale.order.balance | money_format }}</td>
-                                    <td class="red">{{ sale.quantity }}</td>
-                                    <td>
-                                        <a href="{% url 'sale:invoice' sale.order.id %}" target="_blank">
-                                            <button class="btn btn-danger">Print</button>
-                                        </a>
-                                    </td>
-                                {% else %}
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>000{{ sale.order.id }}</td>
-                                    <td>{{ sale.product }}</td>
-                                    <td>{{ sale.order.customer.name }}</td>
-                                    <td>{{ sale.order.attained_by }}</td>
-                                    <td>{{ sale.price }}</td>
-                                    <td>{{ sale.order.amount_paid | money_format }}</td>
-                                    <td>{{ sale.order.balance | money_format }}</td>
-                                    <td>{{ sale.quantity }}</td>
-                                    <td>
-                                        <a href="{% url 'sale:invoice' sale.order.id %}" target="_blank">
-                                            <button class="btn btn-success">Print</button>
-                                        </a>
-                                    </td>
-                                {% endif %}
+                                <td>{{ forloop.counter }}</td>
+                                <td>000{{ sale.order.id }}</td>
+                                <td>{{ sale.product }}</td>
+                                <td>{{ sale.order.customer.name }}</td>
+                                <td>{{ sale.order.created }}</td>
+                                <td>{{ sale.order.attained_by }}</td>
+                                <td>{{ sale.price }}</td>
+                                <td>{{ sale.order.amount_paid | money_format }}</td>
+                                <td>{{ sale.quantity }}</td>
+                                <td>
+                                    <a href="{% url 'sale:invoice' sale.order.id %}" target="_blank">
+                                        <button class="btn btn-success">Print</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'sale:remove' sale.order.id %}">
+                                        <button class="btn btn-danger">Remove</button>
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

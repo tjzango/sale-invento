@@ -41,12 +41,14 @@
                     {% with path='message' title='Send Message' icon='fa fa-envelope' %}
                         {% include 'components/nav_link.html' %}
                     {% endwith %}
+                    {% comment %}
                     {% with path='sale:debtors' title='Debtors' icon='fa fa-user' %}
                         {% include 'components/nav_link.html' %}
                     {% endwith %}
                     {% with path='customer_requests' title='Customer Requests' icon='fa fa-refresh' %}
                     {% include 'components/nav_link.html' %}
                 {% endwith %}
+                {% endcomment %}
                 {% endif %}
                 {% with path='profile' title='Profile' icon='lnr lnr-user' %}
                     {% include 'components/nav_link.html' %}

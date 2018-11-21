@@ -35,7 +35,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ sale.product }}</td>
-                                <td>{{ sale.attained_by }}</td>
+                                <td>{{ sale.order.attained_by }}</td>
                                 <td>{{ sale.price | money_format }}</td>
                                 <td>{{ sale.quantity }}</td>
                             </tr>
